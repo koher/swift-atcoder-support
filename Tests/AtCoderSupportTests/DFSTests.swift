@@ -4,11 +4,10 @@ import XCTest
 final class DFSTests: XCTestCase {
     func testDFS() {
         do { // Trees
-            // A1 --+-> B1 --+-> C1
-            //      |        +-> C2
-            //      +-> B2 --+-> C3
-            //               +-> C4
-            let nodes = ["A1", "B1", "B2", "C1", "C2", "C3", "C4"]
+            // 0 --+-> 1 --+-> 3
+            //     |       +-> 4
+            //     +-> 2 --+-> 5
+            //             +-> 6
             let edges = [
                 [1, 2],
                 [3, 4],
@@ -20,34 +19,33 @@ final class DFSTests: XCTestCase {
             ]
             
             do {
-                var r: [String] = []
-                dfs(nodes: nodes, edges: edges, startedAt: 0) { node in
-                    r.append(node)
+                var r: [Int] = []
+                dfs(edges: edges, startedAt: 0) { i in
+                    r.append(i)
                 }
-                XCTAssertEqual(r, ["A1", "B1", "C1", "C2", "B2", "C3", "C4"])
+                XCTAssertEqual(r, [0, 1, 3, 4, 2, 5, 6])
             }
             do { // Subtrees
-                var r: [String] = []
-                dfs(nodes: nodes, edges: edges, startedAt: 2) { node in
-                    r.append(node)
+                var r: [Int] = []
+                dfs(edges: edges, startedAt: 2) { i in
+                    r.append(i)
                 }
-                XCTAssertEqual(r, ["B2", "C3", "C4"])
+                XCTAssertEqual(r, [2, 5, 6])
             }
             do { // Leaves
-                var r: [String] = []
-                dfs(nodes: nodes, edges: edges, startedAt: 4) { node in
-                    r.append(node)
+                var r: [Int] = []
+                dfs(edges: edges, startedAt: 4) { i in
+                    r.append(i)
                 }
-                XCTAssertEqual(r, ["C2"])
+                XCTAssertEqual(r, [4])
             }
         }
         
         do { // Complex Graphs
-            // A1 <-+-> B1 <-+-> C1 --> A1
-            // ^^   |        +-> C2 --> A1
-            // ||   +-> B2 <-+-> C3 --> A1
-            // ++            +-> C4 --> A1
-            let nodes = ["A1", "B1", "B2", "C1", "C2", "C3", "C4"]
+            //  0 <-+-> 1 <-+-> 3 --> 0
+            // ^^   |       +-> 4 --> 0
+            // ||   +-> 2 <-+-> 5 --> 0
+            // ++           +-> 6 --> 0
             let edges = [
                 [0, 1, 2],
                 [0, 3, 4],
@@ -59,35 +57,35 @@ final class DFSTests: XCTestCase {
             ]
             
             do {
-                var r: [String] = []
-                dfs(nodes: nodes, edges: edges, startedAt: 0) { node in
-                    r.append(node)
+                var r: [Int] = []
+                dfs(edges: edges, startedAt: 0) { i in
+                    r.append(i)
                 }
-                XCTAssertEqual(r, ["A1", "B1", "C1", "C2", "B2", "C3", "C4"])
+                XCTAssertEqual(r, [0, 1, 3, 4, 2, 5, 6])
             }
             do {
-                var r: [String] = []
-                dfs(nodes: nodes, edges: edges, startedAt: 2) { node in
-                    r.append(node)
+                var r: [Int] = []
+                dfs(edges: edges, startedAt: 2) { i in
+                    r.append(i)
                 }
-                XCTAssertEqual(r, ["B2", "A1", "B1", "C1", "C2", "C3", "C4"])
+                XCTAssertEqual(r, [2, 0, 1, 3, 4, 5, 6])
             }
             do {
-                var r: [String] = []
-                dfs(nodes: nodes, edges: edges, startedAt: 4) { node in
-                    r.append(node)
+                var r: [Int] = []
+                dfs(edges: edges, startedAt: 4) { i in
+                    r.append(i)
                 }
-                XCTAssertEqual(r, ["C2", "B1", "A1", "B2", "C3", "C4", "C1"])
+                XCTAssertEqual(r, [4, 1, 0, 2, 5, 6, 3])
             }
         }
     }
     
-    func testDFSInout() {
+    func testDFSWithPrev() {
         do { // Trees
-            // 10 --+-> 20 --+-> 40
-            //      |        +-> 50
-            //      +-> 30 --+-> 60
-            //               +-> 70
+            // 0 --+-> 1 --+-> 3
+            //     |       +-> 4
+            //     +-> 2 --+-> 5
+            //             +-> 6
             let edges = [
                 [1, 2],
                 [3, 4],
@@ -99,39 +97,42 @@ final class DFSTests: XCTestCase {
             ]
             
             do {
-                var nodes = [10, 20, 30, 40, 50, 60, 70]
-                var count = 0
-                dfs(nodes: &nodes, edges: edges, startedAt: 0) { node in
-                    count += 1
-                    node += count
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                dfs(edges: edges, startedAt: 0) { current, prev in
+                    currents.append(current)
+                    prevs.append(prev)
                 }
-                XCTAssertEqual(nodes, [11, 22, 35, 43, 54, 66, 77])
+                XCTAssertEqual(currents, [0, 1, 3, 4, 2, 5, 6])
+                XCTAssertEqual(prevs, [nil, 0, 1, 1, 0, 2, 2])
             }
             do { // Subtrees
-                var nodes = [10, 20, 30, 40, 50, 60, 70]
-                var count = 0
-                dfs(nodes: &nodes, edges: edges, startedAt: 2) { node in
-                    count += 1
-                    node += count
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                dfs(edges: edges, startedAt: 2) { current, prev in
+                    currents.append(current)
+                    prevs.append(prev)
                 }
-                XCTAssertEqual(nodes, [10, 20, 31, 40, 50, 62, 73])
+                XCTAssertEqual(currents, [2, 5, 6])
+                XCTAssertEqual(prevs, [nil, 2, 2])
             }
             do { // Leaves
-                var nodes = [10, 20, 30, 40, 50, 60, 70]
-                var count = 0
-                dfs(nodes: &nodes, edges: edges, startedAt: 4) { node in
-                    count += 1
-                    node += count
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                dfs(edges: edges, startedAt: 4) { current, prev in
+                    currents.append(current)
+                    prevs.append(prev)
                 }
-                XCTAssertEqual(nodes, [10, 20, 30, 40, 51, 60, 70])
+                XCTAssertEqual(currents, [4])
+                XCTAssertEqual(prevs, [nil])
             }
         }
         
         do { // Complex Graphs
-            // A1 <-+-> B1 <-+-> C1 --> A1
-            // ^^   |        +-> C2 --> A1
-            // ||   +-> B2 <-+-> C3 --> A1
-            // ++            +-> C4 --> A1
+            //  0 <-+-> 1 <-+-> 3 --> 0
+            // ^^   |       +-> 4 --> 0
+            // ||   +-> 2 <-+-> 5 --> 0
+            // ++           +-> 6 --> 0
             let edges = [
                 [0, 1, 2],
                 [0, 3, 4],
@@ -143,31 +144,148 @@ final class DFSTests: XCTestCase {
             ]
             
             do {
-                var nodes = [10, 20, 30, 40, 50, 60, 70]
-                var count = 0
-                dfs(nodes: &nodes, edges: edges, startedAt: 0) { node in
-                    count += 1
-                    node += count
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                dfs(edges: edges, startedAt: 0) { current, prev in
+                    currents.append(current)
+                    prevs.append(prev)
                 }
-                XCTAssertEqual(nodes, [11, 22, 35, 43, 54, 66, 77])
+                XCTAssertEqual(currents, [0, 1, 3, 4, 2, 5, 6])
+                XCTAssertEqual(prevs, [nil, 0, 1, 1, 0, 2, 2])
             }
             do {
-                var nodes = [10, 20, 30, 40, 50, 60, 70]
-                var count = 0
-                dfs(nodes: &nodes, edges: edges, startedAt: 2) { node in
-                    count += 1
-                    node += count
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                dfs(edges: edges, startedAt: 2) { current, prev in
+                    currents.append(current)
+                    prevs.append(prev)
                 }
-                XCTAssertEqual(nodes, [12, 23, 31, 44, 55, 66, 77])
+                XCTAssertEqual(currents, [2, 0, 1, 3, 4, 5, 6])
+                XCTAssertEqual(prevs, [nil, 2, 0, 1, 1, 2, 2])
             }
             do {
-                var nodes = [10, 20, 30, 40, 50, 60, 70]
-                var count = 0
-                dfs(nodes: &nodes, edges: edges, startedAt: 4) { node in
-                    count += 1
-                    node += count
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                dfs(edges: edges, startedAt: 4) { current, prev in
+                    currents.append(current)
+                    prevs.append(prev)
                 }
-                XCTAssertEqual(nodes, [13, 22, 34, 47, 51, 65, 76])
+                XCTAssertEqual(currents, [4, 1, 0, 2, 5, 6, 3])
+                XCTAssertEqual(prevs, [nil, 4, 1, 0, 2, 2, 1])
+            }
+        }
+    }
+    
+    func testDFSWithPrevDepth() {
+        do { // Trees
+            // 0 --+-> 1 --+-> 3
+            //     |       +-> 4
+            //     +-> 2 --+-> 5
+            //             +-> 6
+            let edges = [
+                [1, 2],
+                [3, 4],
+                [5, 6],
+                [],
+                [],
+                [],
+                [],
+            ]
+            
+            do {
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                var depths: [Int] = []
+                dfs(edges: edges, startedAt: 0) { current, prev, depth in
+                    currents.append(current)
+                    prevs.append(prev)
+                    depths.append(depth)
+                }
+                XCTAssertEqual(currents, [0, 1, 3, 4, 2, 5, 6])
+                XCTAssertEqual(prevs, [nil, 0, 1, 1, 0, 2, 2])
+                XCTAssertEqual(depths, [0, 1, 2, 2, 1, 2, 2])
+            }
+            do { // Subtrees
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                var depths: [Int] = []
+                dfs(edges: edges, startedAt: 2) { current, prev, depth in
+                    currents.append(current)
+                    prevs.append(prev)
+                    depths.append(depth)
+                }
+                XCTAssertEqual(currents, [2, 5, 6])
+                XCTAssertEqual(prevs, [nil, 2, 2])
+                XCTAssertEqual(depths, [0, 1, 1])
+            }
+            do { // Leaves
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                var depths: [Int] = []
+                dfs(edges: edges, startedAt: 4) { current, prev, depth in
+                    currents.append(current)
+                    prevs.append(prev)
+                    depths.append(depth)
+                }
+                XCTAssertEqual(currents, [4])
+                XCTAssertEqual(prevs, [nil])
+                XCTAssertEqual(depths, [0])
+            }
+        }
+        
+        do { // Complex Graphs
+            //  0 <-+-> 1 <-+-> 3 --> 0
+            // ^^   |       +-> 4 --> 0
+            // ||   +-> 2 <-+-> 5 --> 0
+            // ++           +-> 6 --> 0
+            let edges = [
+                [0, 1, 2],
+                [0, 3, 4],
+                [0, 5, 6],
+                [1, 0],
+                [1, 0],
+                [2, 0],
+                [2, 0],
+            ]
+            
+            do {
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                var depths: [Int] = []
+                dfs(edges: edges, startedAt: 0) { current, prev, depth in
+                    currents.append(current)
+                    prevs.append(prev)
+                    depths.append(depth)
+                }
+                XCTAssertEqual(currents, [0, 1, 3, 4, 2, 5, 6])
+                XCTAssertEqual(prevs, [nil, 0, 1, 1, 0, 2, 2])
+                XCTAssertEqual(depths, [0, 1, 2, 2, 1, 2, 2])
+            }
+            do {
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                var depths: [Int] = []
+                dfs(edges: edges, startedAt: 2) { current, prev, depth in
+                    currents.append(current)
+                    prevs.append(prev)
+                    depths.append(depth)
+                }
+                XCTAssertEqual(currents, [2, 0, 1, 3, 4, 5, 6])
+                XCTAssertEqual(prevs, [nil, 2, 0, 1, 1, 2, 2])
+                XCTAssertEqual(depths, [0, 1, 2, 3, 3, 1, 1])
+            }
+            do {
+                var currents: [Int] = []
+                var prevs: [Int?] = []
+                var depths: [Int] = []
+                dfs(edges: edges, startedAt: 4) { current, prev, depth in
+                    currents.append(current)
+                    prevs.append(prev)
+                    depths.append(depth)
+                }
+                XCTAssertEqual(currents, [4, 1, 0, 2, 5, 6, 3])
+                XCTAssertEqual(prevs, [nil, 4, 1, 0, 2, 2, 1])
+                XCTAssertEqual(depths, [0, 1, 2, 3, 4, 4, 2])
             }
         }
     }
