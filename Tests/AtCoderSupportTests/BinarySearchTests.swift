@@ -109,6 +109,11 @@ final class BinarySearchTests: XCTestCase {
                 XCTAssertEqual(r, [])
             }
         }
+        do { // Overflow of `low + high`
+            let a =  (Int.max - 10) ..< Int.max
+            let r = a.values(>=, Int.max - 3)
+            XCTAssertEqual(r.count, 3)
+        }
     }
     
     func testValuesGEPerformance() {
