@@ -2,7 +2,8 @@ func permutations<C>(of values: C) -> [[C.Element]]
         where C: RandomAccessCollection, C.SubSequence: RangeReplaceableCollection,
               C.Indices == Range<Int>, C.SubSequence.Indices == Range<Int> {
     var result: [[C.Element]] = []
-    _permutations(of: Array(values), indices: values.indices, result: &result)
+    let values = Array(values)
+    _permutations(of: values, indices: values.indices, result: &result)
     return result
 }
 

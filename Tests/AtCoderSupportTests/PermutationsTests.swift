@@ -77,6 +77,16 @@ final class PermutationsTests: XCTestCase {
             XCTAssertTrue(r.contains([3, 1, 2]))
             XCTAssertTrue(r.contains([3, 2, 1]))
         }
+        do { // Collections but `Array`s
+            let r = Set(permutations(of: [0, 1, 2, 3, 4][1 ..< 4]))
+            XCTAssertEqual(r.count, 6)
+            XCTAssertTrue(r.contains([1, 2, 3]))
+            XCTAssertTrue(r.contains([1, 3, 2]))
+            XCTAssertTrue(r.contains([2, 1, 3]))
+            XCTAssertTrue(r.contains([2, 3, 1]))
+            XCTAssertTrue(r.contains([3, 1, 2]))
+            XCTAssertTrue(r.contains([3, 2, 1]))
+        }
     }
     
     func testPermutatinsPerformance() {
