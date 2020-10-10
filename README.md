@@ -10,4 +10,4 @@ swift test -c release -Xswiftc -enable-testing
 
 ## License
 
-MIT
+CC0
