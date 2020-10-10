@@ -1,5 +1,5 @@
 func bfs(edges: [[Int]], startedAt start: Int, _ operation: (Int) -> Void) {
-    precondition(edges.indices.contains(start))
+    precondition(edges.indices.contains(start), "`start` index is out of bounds: \(start) (at line \(#line) in \(#file))")
     var visited: Set<Int> = []
     var nexts: [Int] = [start]
     while !nexts.isEmpty {
@@ -17,7 +17,7 @@ func bfs(edges: [[Int]], startedAt start: Int, _ operation: (Int) -> Void) {
 }
 
 func bfs(edges: [[Int]], startedAt start: Int, _ operation: (_ current: Int, _ prev: Int?) -> Void) {
-    precondition(edges.indices.contains(start))
+    precondition(edges.indices.contains(start), "`start` index is out of bounds: \(start) (at line \(#line) in \(#file))")
     var visited: Set<Int> = []
     var nexts: [(current: Int, prev: Int?)] = [(start, nil)]
     while !nexts.isEmpty {
@@ -35,7 +35,7 @@ func bfs(edges: [[Int]], startedAt start: Int, _ operation: (_ current: Int, _ p
 }
 
 func bfs(edges: [[Int]], startedAt start: Int, _ operation: (_ current: Int, _ prev: Int?, _ depth: Int) -> Void) {
-    precondition(edges.indices.contains(start))
+    precondition(edges.indices.contains(start), "`start` index is out of bounds: \(start) (at line \(#line) in \(#file))")
     var visited: Set<Int> = []
     var nexts: [(current: Int, prev: Int?, depth: Int)] = [(start, nil, 0)]
     while !nexts.isEmpty {
