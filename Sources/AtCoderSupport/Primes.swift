@@ -4,8 +4,10 @@ func primes(upTo number: Int) -> [Int] {
     var sieve: [Bool] = .init(repeating: false, count: number + 1)
     for m in stride(from: 3, through: Int(Double(number).squareRoot() + 1.5), by: 2) {
         if sieve[m] { continue }
-        for k in stride(from: m * 2, through: number, by: m) {
-            sieve[k] = true
+        let maxK = number / m
+        if maxK < 2 { continue }
+        for k in 2 ... maxK {
+            sieve[k * m] = true
         }
     }
     var result: [Int] = [2]
