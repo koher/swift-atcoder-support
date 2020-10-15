@@ -8,5 +8,10 @@ func primes(upTo number: Int) -> [Int] {
             sieve[k] = true
         }
     }
-    return (2 ... number).filter { !sieve[$0] }
+    var result: [Int] = [2]
+    for m in stride(from: 3, through: number, by: 2) {
+        if sieve[m] { continue }
+        result.append(m)
+    }
+    return result
 }
