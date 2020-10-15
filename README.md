@@ -38,7 +38,7 @@ swift test -c release -Xswiftc -enable-testing
 `-Ounchecked` で実行するには次のようにします。
 
 ```
-swift test -Xswiftc -Ounchecked -Xswiftc -enable-testing
+swift test -c release -Xswiftc -enable-testing -Xswiftc -Ounchecked
 ```
 
 ## License

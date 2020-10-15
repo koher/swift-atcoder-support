@@ -116,6 +116,7 @@ final class BinarySearchTests: XCTestCase {
         }
     }
     
+    #if !DEBUG
     func testValuesGEPerformance() {
         let a = 0 ..< 10_000_000_000_000
         measure {
@@ -123,4 +124,5 @@ final class BinarySearchTests: XCTestCase {
             XCTAssertEqual(r.count, 1_000_000_000_000)
         }
     }
+    #endif
 }

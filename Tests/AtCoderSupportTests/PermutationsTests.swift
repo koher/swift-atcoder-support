@@ -89,10 +89,12 @@ final class PermutationsTests: XCTestCase {
         }
     }
     
+    #if !DEBUG
     func testPermutatinsPerformance() {
         measure {
             let r = (1 ... 8).permutations()
             XCTAssertEqual(r.count, 40320)
         }
     }
+    #endif
 }

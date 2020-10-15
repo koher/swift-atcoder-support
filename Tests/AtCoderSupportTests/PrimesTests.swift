@@ -37,10 +37,12 @@ final class PrimesTests: XCTestCase {
         }
     }
     
+    #if !DEBUG
     func testPrimesPerformance() {
         measure {
             let r = primes(upTo: 10_000_000)
             XCTAssertEqual(r.count, 664_579)
         }
     }
+    #endif
 }
