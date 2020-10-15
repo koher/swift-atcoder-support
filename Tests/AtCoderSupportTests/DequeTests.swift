@@ -51,4 +51,20 @@ final class DequeTests: XCTestCase {
             XCTAssertEqual(Array(deque), Array((1 ... n).reversed()))
         }
     }
+    
+    #if !DEBUG
+    func testAppendPerformance() {
+        measure {
+            var deque: Deque<Int> = []
+            for n in 1 ... 1_000_000 {
+                if n.isMultiple(of: 2) {
+                    deque.append(n)
+                } else {
+                    deque.appendFirst(n)
+                }
+            }
+            XCTAssertEqual(deque.count, 1_000_000)
+        }
+    }
+    #endif
 }
