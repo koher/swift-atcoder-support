@@ -1,3 +1,6 @@
+#if os(Linux)
+import Glibc // FIXME: 現状では必要ですが、不要になった段階で除去
+#endif
 func primes(upTo number: Int) -> [Int] {
     precondition(number >= 0)
     if number < 2 { return [] }
