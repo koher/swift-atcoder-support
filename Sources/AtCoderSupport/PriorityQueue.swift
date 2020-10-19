@@ -30,19 +30,19 @@ struct PriorityQueue<Element> {
         elements.append(element)
         while i > 0 {
             let parentIndex = (i - 1) >> 1
-            guard areInIncreasingOrder(element, elements[parentIndex]) else { break }
-            elements.swapAt(i, parentIndex)
+            let parent = elements[parentIndex]
+            guard areInIncreasingOrder(element, parent) else { break }
+            elements[parentIndex] = element
+            elements[i] = parent
             i = parentIndex
         }
     }
     
     mutating func popFirst() -> Element? {
-        if elements.isEmpty { return nil }
-        elements.swapAt(0, elements.count - 1)
-        let first = elements.removeLast()
-        if elements.isEmpty { return first }
+        guard let element = elements.popLast() else { return nil }
+        guard let first = elements.first else { return element }
+        elements[0] = element
         
-        let element = elements[0]
         var  i = 0
         while true {
             var childIndex: Int = (i << 1) + 1
@@ -57,7 +57,8 @@ struct PriorityQueue<Element> {
                 }
             }
             if areInIncreasingOrder(element, child) { break }
-            elements.swapAt(i, childIndex)
+            elements[childIndex] = element
+            elements[i] = child
             i = childIndex
         }
 
