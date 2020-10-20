@@ -1,4 +1,4 @@
-func int1(line: Int = #line, file: String = #file) -> Int {
+func readInt1(line: Int = #line, file: String = #file) -> Int {
     guard let string = readLine() else {
         preconditionFailure("No input (at line \(line) in \(file))")
     }
@@ -8,7 +8,7 @@ func int1(line: Int = #line, file: String = #file) -> Int {
     return value
 }
 
-func int2(line: Int = #line, file: String = #file) -> (Int, Int) {
+func readInt2(line: Int = #line, file: String = #file) -> (Int, Int) {
     guard let string = readLine() else {
         preconditionFailure("No input (at line \(line) in \(file))")
     }
@@ -22,7 +22,7 @@ func int2(line: Int = #line, file: String = #file) -> (Int, Int) {
     return (values[0], values[1])
 }
 
-func int3(line: Int = #line, file: String = #file) -> (Int, Int, Int) {
+func readInt3(line: Int = #line, file: String = #file) -> (Int, Int, Int) {
     guard let string = readLine() else {
         preconditionFailure("No input (at line \(line) in \(file))")
     }
@@ -36,7 +36,7 @@ func int3(line: Int = #line, file: String = #file) -> (Int, Int, Int) {
     return (values[0], values[1], values[2])
 }
 
-func intN(line: Int = #line, file: String = #file) -> [Int] {
+func readIntN(line: Int = #line, file: String = #file) -> [Int] {
     guard let string = readLine() else {
         preconditionFailure("No input (at line \(line) in \(file))")
     }
