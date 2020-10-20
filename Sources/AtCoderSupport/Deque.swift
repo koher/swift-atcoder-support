@@ -6,8 +6,8 @@ struct Deque<Element>: MutableCollection, RandomAccessCollection, ExpressibleByA
     init(_ values: ArraySlice<Element>) {
         buffer = Buffer(from: values, capacity: Swift.max(values.count, 16))
     }
-    init<C>(_ collection: C) where C: Collection, C.Element == Element {
-        self.init([Element](collection))
+    init<S>(_ sequence: S) where S: Sequence, S.Element == Element {
+        self.init([Element](sequence))
     }
     init(arrayLiteral values: Element...) {
         self.init(values)

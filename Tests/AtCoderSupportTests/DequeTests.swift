@@ -2,6 +2,13 @@ import XCTest
 @testable import AtCoderSupport
 
 final class DequeTests: XCTestCase {
+    func testInitFromSequence() {
+        let deque: Deque<Int> = .init(1 ... 3)
+        XCTAssertEqual(deque.count, 3)
+        XCTAssertEqual(deque.first, 1)
+        XCTAssertEqual(deque.last, 3)
+    }
+    
     func testAppend() {
         var deque: Deque<Int> = []
         for n in 1 ... 100 {
