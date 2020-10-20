@@ -29,7 +29,7 @@ swift test -c release -Xswiftc -enable-testing -Xswiftc -Ounchecked
 ```swift
 // main.swift
 func dfs(edges: [[Int]], startedAt start: Int, _ body: (Int) -> Void) {
-    precondition(edges.indices.contains(start), "`start` index is out of bounds: \(start) (at line \(#line) in \(#file))")
+    precondition(edges.indices.contains(start), "`start` index is out of bounds: \(start)")
     // 省略
 }
 
@@ -38,7 +38,7 @@ dfs(edges: [[1, 2], [], []], startedAt: -1) { _ in }
 
 ```
 $ swift main.swift 
-Precondition failed: `start` index is out of bounds: -1 (at line 3 in main.swift): file main/main.swift, line 3
+Precondition failed: `start` index is out of bounds: -1
 ```
 
 ## License
