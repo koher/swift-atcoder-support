@@ -9,6 +9,7 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 ## 利用例
 
 | アルゴリズム・データ構造 | API | 利用例 |
+|:--|:--|:--|
 | 順列 | `permutations()` | [ABC 145 C - Average Length](https://atcoder.jp/contests/abc145/submissions/17547859) |
 | 二分探索 | `values(_:_:)` | [ABC 077 C - Snuke Festival](https://atcoder.jp/contests/abc077/submissions/17547635) |
 | 幅優先探索 | `dfs(edges:startedAt:_:)` | [ABC 138 D - Ki](https://atcoder.jp/contests/abc138/submissions/17546144) |
