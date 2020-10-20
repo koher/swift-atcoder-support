@@ -6,6 +6,20 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 
 コピペを前提としているため、すべての API は `public` でなく無印の `internal` として実装されています。また、本パッケージ内も含めて極力他の API に依存なく、関数や `extension` 単体でコピペできるようにしています。
 
+## テスト
+
+通常の Swift Package 同様 `swift test` でテストを実行できますが、パフォーマンステストなど最適化を必要とする場合は次のようなオプションが必要になります。これは、 `internal` な API をテストするために `@testable import` を利用しているため、通常の `swift test -c release` ではテストを実行できないからです。
+
+```
+swift test -c release -Xswiftc -enable-testing
+```
+
+`-Ounchecked` で実行するには次のようにします。
+
+```
+swift test -c release -Xswiftc -enable-testing -Xswiftc -Ounchecked
+```
+
 ## `precondition`
 
 コード中に `precondition` が含まる場合がありますが、 AtCoder では `-Ounchecked` でコンパイルされるため実行時にはすべて取り除かれます。そのため、 `precondition` のオーバーヘッドを気にする必要はありません。
@@ -25,20 +39,6 @@ dfs(edges: [[1, 2], [], []], startedAt: -1) { _ in }
 ```
 $ swift main.swift 
 Precondition failed: `start` index is out of bounds: -1 (at line 3 in main.swift): file main/main.swift, line 3
-```
-
-## テスト
-
-通常の Swift Package 同様 `swift test` でテストを実行できますが、パフォーマンステストなど最適化を必要とする場合は次のようなオプションが必要になります。これは、 `internal` な API をテストするために `@testable import` を利用しているため、通常の `swift test -c release` ではテストを実行できないからです。
-
-```
-swift test -c release -Xswiftc -enable-testing
-```
-
-`-Ounchecked` で実行するには次のようにします。
-
-```
-swift test -c release -Xswiftc -enable-testing -Xswiftc -Ounchecked
 ```
 
 ## License
