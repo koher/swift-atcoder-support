@@ -23,10 +23,18 @@ final class InputTest: XCTestCase {
             XCTAssertEqual(r2, 11)
             XCTAssertEqual(r3, 13)
         }
+        
+        do {
+            let (r1, r2, r3, r4) = readInt4()
+            XCTAssertEqual(r1, 17)
+            XCTAssertEqual(r2, 19)
+            XCTAssertEqual(r3, 23)
+            XCTAssertEqual(r4, 29)
+        }
 
         do {
             let r = readIntN()
-            XCTAssertEqual(r, [17, 19, 23, 29])
+            XCTAssertEqual(r, [31, 37, 41, 43, 47])
         }
         #endif
     }
