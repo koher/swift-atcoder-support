@@ -13,14 +13,6 @@ struct PriorityQueue<Element> {
         self.init(EmptyCollection(), by: areInIncreasingOrder)
     }
     
-    init<S>(_ elements: S) where S: Sequence, S.Element == Element, Element: Comparable {
-        self.init(elements, by: <)
-    }
-    
-    init() where Element: Comparable {
-        self.init(by: <)
-    }
-    
     var isEmpty: Bool { elements.isEmpty }
     var count: Int { elements.count }
     var first: Element? { elements.first }
@@ -69,4 +61,14 @@ struct PriorityQueue<Element> {
 
         return first
     }
+}
+extension PriorityQueue where Element: Comparable {
+    init<S>(_ elements: S) where S: Sequence, S.Element == Element {
+        self.init(elements, by: <)
+    }
+    
+    init() {
+        self.init(by: <)
+    }
+    
 }
