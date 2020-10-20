@@ -59,6 +59,17 @@ final class DequeTests: XCTestCase {
         }
     }
     
+    func testEqOperator() {
+        do {
+            let deque: Deque<Int> = [2, 3, 5]
+            XCTAssertEqual(deque, [2, 3, 5])
+        }
+        do {
+            let deque: Deque<Int> = []
+            XCTAssertEqual(deque, [])
+        }
+    }
+    
     #if !DEBUG
     func testAppendPerformance() {
         measure {
