@@ -6,6 +6,13 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 
 コピペを前提としているため、すべての API は `public` でなく無印の `internal` として実装されています。また、本パッケージ内も含めて極力他の API に依存なく、関数や `extension` 単体でコピペできるようにしています。
 
+## 利用例
+
+| アルゴリズム・データ構造 | API | 利用例 |
+| 順列 | `permutations()` | [ABC 145 C - Average Length](https://atcoder.jp/contests/abc145/submissions/17547859) |
+| 二分探索 | `values(_:_:)` | [ABC 077 C - Snuke Festival](https://atcoder.jp/contests/abc077/submissions/17547635) |
+| 幅優先探索 | `dfs(edges:startedAt:_:)` | [ABC 138 D - Ki](https://atcoder.jp/contests/abc138/submissions/17546144) |
+
 ## テスト
 
 通常の Swift Package 同様 `swift test` でテストを実行できますが、パフォーマンステストなど最適化を必要とする場合は次のようなオプションが必要になります。これは、 `internal` な API をテストするために `@testable import` を利用しているため、通常の `swift test -c release` ではテストを実行できないからです。
