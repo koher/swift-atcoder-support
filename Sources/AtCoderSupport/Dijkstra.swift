@@ -73,15 +73,15 @@ func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt s
     var result: [Distance] = .init(repeating: .infinity, count: graph.count)
     result[start] = .zero
     var used = Array(repeating:false, count: graph.count)
-    var queue = PriorityQueue<(Int, Distance)>(by: <=)
-    queue.append((start, .zero))
-    while let (from, _) = queue.popFirst() {
+    var queue = PriorityQueue<(Distance, Int)>(by: <=)
+    queue.append((.zero, start))
+    while let (_, from) = queue.popFirst() {
         if used[from] { continue }
         used[from] = true
         for (to, distance) in graph[from]{
             if result[from] + distance < result[to] {
                 result[to] = result[from] + distance
-                queue.append((to, result[to]))
+                queue.append((result[to], to))
             }
         }
     }
