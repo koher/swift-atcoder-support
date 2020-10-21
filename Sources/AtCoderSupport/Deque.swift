@@ -55,7 +55,7 @@ struct Deque<Element>: MutableCollection, RandomAccessCollection, ExpressibleByA
             self.start = 0
             self.count = values.count
             self.buffer = .allocate(capacity: capacity)
-            buffer.initialize(from: values, count: capacity)
+            buffer.initialize(from: values, count: count)
         }
         init(from values: ArraySlice<Element>, capacity: Int) {
             precondition(capacity >= values.count)
@@ -63,7 +63,7 @@ struct Deque<Element>: MutableCollection, RandomAccessCollection, ExpressibleByA
             self.start = 0
             self.count = values.count
             self.buffer = .allocate(capacity: capacity)
-            values.withUnsafeBufferPointer { buffer.initialize(from: $0.baseAddress!, count: capacity) }
+            values.withUnsafeBufferPointer { buffer.initialize(from: $0.baseAddress!, count: count) }
         }
         init(from values: Buffer<Element>, capacity: Int) {
             precondition(capacity >= values.count)
