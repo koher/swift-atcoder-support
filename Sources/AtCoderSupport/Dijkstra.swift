@@ -72,12 +72,10 @@ extension Double: HasInfinity {}
 func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt start: Int) -> [Distance] where Distance: Comparable, Distance: AdditiveArithmetic, Distance: HasInfinity {
     var result: [Distance] = .init(repeating: .infinity, count: graph.count)
     result[start] = .zero
-    var used = Array(repeating:false, count: graph.count)
-    var queue = _PriorityQueue<(Distance, Int)>(by: <=)
+    var queue = _PriorityQueue<(Distance, Int)>(by: <)
     queue.append((.zero, start))
-    while let (_, from) = queue.popFirst() {
-        if used[from] { continue }
-        used[from] = true
+    while let (distanceFromStart, from) = queue.popFirst() {
+        if result[from] < distanceFromStart { continue }
         for (to, distance) in graph[from]{
             if result[from] + distance < result[to] {
                 result[to] = result[from] + distance
