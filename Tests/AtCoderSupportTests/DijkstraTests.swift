@@ -57,4 +57,19 @@ final class DijkstraTests: XCTestCase {
             XCTAssertEqual(r, [2.0, 0.0, 5.0])
         }
     }
+    
+    #if !DEBUG
+    func testDijkstraPerformance() {
+        var graph: [[(index: Int, distance: Int)]] = .init(repeating: [], count: 1000)
+        for from in graph.indices {
+            for to in graph.indices {
+                graph[from].append((index: to, distance: to == from ? 0 : to + from))
+            }
+        }
+        measure {
+            let r = dijkstra(graph: graph, startedAt: 0)
+            XCTAssertEqual(r.count, graph.count)
+        }
+    }
+    #endif
 }
