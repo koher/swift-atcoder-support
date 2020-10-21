@@ -82,8 +82,8 @@ func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt s
         dist[src] = prove_cost
         
         for edge in graph[src]{
-            let cost = edge.0
-            let dest = edge.1 as! Int
+            let cost = edge.1 as! Int
+            let dest = edge.0
             if dist[dest] > dist[src]+cost{
                 dist[dest] = dist[src]+cost
                 q.append((dist[dest],dest))
