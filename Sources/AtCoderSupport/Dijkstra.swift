@@ -62,34 +62,41 @@ private struct _PriorityQueue<Element> {
         return first
     }
 }
-func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt start: Int) -> [Int] where Distance: Comparable, Distance: AdditiveArithmetic{
-    let INF = Int.max
-    var dist = Array(repeating: INF, count: graph.count)
-    dist[start] = 0
-    var used = Array(repeating:false,count: graph.count)
-    var q = PriorityQueue<(Int, Int)>(by:<=)
-    q.append((0,start))
-    while !q.isEmpty{
-        let label = q.popFirst()!
-        let prove_cost = label.0
-        let src = label.1 
-        
-        if(used[src]){
-            continue
-        }
-        
-        used[src] = true
-        dist[src] = prove_cost
-        
-        for edge in graph[src]{
-            let cost = edge.1 as! Int
-            let dest = edge.0
-            if dist[dest] > dist[src]+cost{
-                dist[dest] = dist[src]+cost
-                q.append((dist[dest],dest))
-            }
-            
+private enum _WithInfinity<Value>: Comparable where Value: Comparable, Value: AdditiveArithmetic {
+    case normal(Value)
+    case infinity
+    
+    static var zero: _WithInfinity<Value> { .normal(.zero) }
+    static func + (lhs: Self, rhs: Self) -> Self {
+        switch (lhs, rhs) {
+        case (.normal(let lValue), .normal(let rValue)):
+            return .normal(lValue + rValue)
+        case (.infinity, .normal(_)), (.normal(_), .infinity), (.infinity, .infinity):
+            return .infinity
         }
     }
-    return dist
+}
+func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt start: Int) -> [Distance] where Distance: Comparable, Distance: AdditiveArithmetic{
+    var result: [_WithInfinity<Distance>] = .init(repeating: .infinity, count: graph.count)
+    result[start] = .zero
+    var used = Array(repeating:false, count: graph.count)
+    var queue = PriorityQueue<(Int, _WithInfinity<Distance>)>(by: <=)
+    queue.append((start, .zero))
+    while let (from, _) = queue.popFirst() {
+        if used[from] { continue }
+        used[from] = true
+        for (to, distance) in graph[from]{
+            if result[from] + .normal(distance) < result[to] {
+                result[to] = result[from] + .normal(distance)
+                queue.append((to, result[to]))
+            }
+        }
+    }
+    return result.map {
+        if case .normal(let distance) = $0 {
+            return distance
+        } else {
+            preconditionFailure()
+        }
+    }
 }
