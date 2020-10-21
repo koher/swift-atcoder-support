@@ -62,41 +62,28 @@ private struct _PriorityQueue<Element> {
         return first
     }
 }
-private enum _WithInfinity<Value>: Comparable where Value: Comparable, Value: AdditiveArithmetic {
-    case normal(Value)
-    case infinity
-    
-    static var zero: _WithInfinity<Value> { .normal(.zero) }
-    static func + (lhs: Self, rhs: Self) -> Self {
-        switch (lhs, rhs) {
-        case (.normal(let lValue), .normal(let rValue)):
-            return .normal(lValue + rValue)
-        case (.infinity, .normal(_)), (.normal(_), .infinity), (.infinity, .infinity):
-            return .infinity
-        }
-    }
+protocol HasInfinity {
+    static var infinity: Self { get }
 }
-func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt start: Int) -> [Distance] where Distance: Comparable, Distance: AdditiveArithmetic{
-    var result: [_WithInfinity<Distance>] = .init(repeating: .infinity, count: graph.count)
+extension Int: HasInfinity { static var infinity: Int { .max } }
+extension UInt: HasInfinity { static var infinity: UInt { .max } }
+extension Float: HasInfinity {}
+extension Double: HasInfinity {}
+func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt start: Int) -> [Distance] where Distance: Comparable, Distance: AdditiveArithmetic, Distance: HasInfinity {
+    var result: [Distance] = .init(repeating: .infinity, count: graph.count)
     result[start] = .zero
     var used = Array(repeating:false, count: graph.count)
-    var queue = PriorityQueue<(Int, _WithInfinity<Distance>)>(by: <=)
+    var queue = PriorityQueue<(Int, Distance)>(by: <=)
     queue.append((start, .zero))
     while let (from, _) = queue.popFirst() {
         if used[from] { continue }
         used[from] = true
         for (to, distance) in graph[from]{
-            if result[from] + .normal(distance) < result[to] {
-                result[to] = result[from] + .normal(distance)
+            if result[from] + distance < result[to] {
+                result[to] = result[from] + distance
                 queue.append((to, result[to]))
             }
         }
     }
-    return result.map {
-        if case .normal(let distance) = $0 {
-            return distance
-        } else {
-            preconditionFailure()
-        }
-    }
+    return result
 }
