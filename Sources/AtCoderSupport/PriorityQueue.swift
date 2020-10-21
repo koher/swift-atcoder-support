@@ -1,4 +1,4 @@
-private struct _PriorityQueue<Element> {
+struct PriorityQueue<Element> {
     private var elements: [Element] = []
     private let areInIncreasingOrder: (Element, Element) -> Bool
     
@@ -62,34 +62,13 @@ private struct _PriorityQueue<Element> {
         return first
     }
 }
-func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt start: Int) -> [Int] where Distance: Comparable, Distance: AdditiveArithmetic{
-    let INF = Int.max
-    var dist = Array(repeating: INF, count: graph.count)
-    dist[start] = 0
-    var used = Array(repeating:false,count: graph.count)
-    var q = PriorityQueue<(Int, Int)>(by:<=)
-    q.append((0,start))
-    while !q.isEmpty{
-        let label = q.popFirst()!
-        let prove_cost = label.0
-        let src = label.1 
-        
-        if(used[src]){
-            continue
-        }
-        
-        used[src] = true
-        dist[src] = prove_cost
-        
-        for edge in graph[src]{
-            let cost = edge.0
-            let dest = edge.1 as! Int
-            if dist[dest] > dist[src]+cost{
-                dist[dest] = dist[src]+cost
-                q.append((dist[dest],dest))
-            }
-            
-        }
+extension PriorityQueue where Element: Comparable {
+    init<S>(_ elements: S) where S: Sequence, S.Element == Element {
+        self.init(elements, by: <)
     }
-    return dist
+    
+    init() {
+        self.init(by: <)
+    }
+    
 }
