@@ -67,6 +67,38 @@ final class PriorityQueueTests: XCTestCase {
             XCTAssertEqual(queue.popFirst(), nil)
         }
         do {
+            var queue: PriorityQueue<(Double, Int)> = .init([
+                (3.0, 4),
+                (2.0, 7),
+                (9.0, 8),
+                (3.0, 2),
+                (2.5, 6),
+                (2.0, 7),
+                (1.0, 9),
+                (1.5, 6),
+                (2.0, 5),
+                (2.0, 8),
+                (3.0, 2),
+                (7.0, 1),
+                (3.0, 3),
+            ], by: <)
+            
+            XCTAssertEqual(queue.popFirst(), (1.0, 9))
+            XCTAssertEqual(queue.popFirst(), (1.5, 6))
+            XCTAssertEqual(queue.popFirst(), (2.0, 5))
+            XCTAssertEqual(queue.popFirst(), (2.0, 7))
+            XCTAssertEqual(queue.popFirst(), (2.0, 7))
+            XCTAssertEqual(queue.popFirst(), (2.0, 8))
+            XCTAssertEqual(queue.popFirst(), (2.5, 6))
+            XCTAssertEqual(queue.popFirst(), (3.0, 2))
+            XCTAssertEqual(queue.popFirst(), (3.0, 2))
+            XCTAssertEqual(queue.popFirst(), (3.0, 3))
+            XCTAssertEqual(queue.popFirst(), (3.0, 4))
+            XCTAssertEqual(queue.popFirst(), (7.0, 1))
+            XCTAssertEqual(queue.popFirst(), (9.0, 8))
+            XCTAssertNil(queue.popFirst())
+        }
+        do {
             var elements = Array(1 ... 100).shuffled()
             var queue: PriorityQueue<Int> = .init(elements)
             elements.sort()
@@ -110,4 +142,17 @@ final class PriorityQueueTests: XCTestCase {
 
     }
     #endif
+}
+
+// FIXME: SE-0283 が導入されたら取り除く
+private func XCTAssertEqual<T: Equatable, U: Equatable>(_ expression1: (T, U)?, _ expression2: (T, U)?) {
+    switch (expression1, expression2) {
+    case (.some(let expression1), .some(let expression2)):
+        XCTAssertEqual(expression1.0, expression2.0)
+        XCTAssertEqual(expression1.1, expression2.1)
+    case (.some(_), .none), (.none, .some(_)):
+        XCTFail()
+    case (.none, .none):
+        break
+    }
 }
