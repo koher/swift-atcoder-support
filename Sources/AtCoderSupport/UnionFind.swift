@@ -1,39 +1,35 @@
 struct UnionFind {
-    var par:[Int]
-    var rank:[Int]
-    var n:Int
-    init(n:Int){
-        self.n = n
-        self.par = Array(repeating:0,count:n)
-        self.rank = Array(repeating:0,count:n)
-        for i in 0..<n{
-            par[i] = i
-        }
+    private var parents: [Int]
+    private var ranks: [Int]
+    private let max: Int
+
+    init(max: Int) {
+        precondition(max >= 0)
+        self.max = max
+        self.parents = Array(0 ..< max)
+        self.ranks = Array(repeating: 0, count: max)
     }
-    mutating func root(x:Int) -> Int {
-        if par[x] == x{
-            return x
-        }
-        else{
-            return root(x:par[x])
-        }
+
+    func root(of i: Int) -> Int {
+        if parents[i] == i { return i }
+        return root(of: parents[i])
     }
-    mutating func unite (x:Int,y:Int){
-        let x = root(x:x)
-        let y = root(x:y)
-        if x == y{
-            return
-        }
-        if rank[x] < rank[y]{
-            par[x] = y
+
+    mutating func unite(_ x: Int, _ y: Int) {
+        let x = root(of: x)
+        let y = root(of: y)
+        if x == y { return }
+        if ranks[x] < ranks[y] {
+            parents[x] = y
         } else {
-            par[y] = x
-            if rank[x] == rank[y]{
-                rank[x] += 1
+            parents[y] = x
+            if ranks[x] == ranks[y] {
+                ranks[x] += 1
             }
         }
     }
-    mutating func same(x:Int,y:Int)->Bool{
-        return root(x:x) == root(x:y)
+
+    func areSame(_ x: Int, _ y: Int) -> Bool {
+        root(of:x) == root(of:y)
     }
 }
