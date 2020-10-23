@@ -120,4 +120,17 @@ final class UnionFindTests: XCTestCase {
             }
         }
     }
+    
+    #if !DEBUG
+    func testUnionFindPerformance() {
+        let n = 10_000_000
+        measure {
+            var unionFind: UnionFind = .init(max: n)
+            for i in 1 ..< n {
+                unionFind.unite(i - 1, i)
+            }
+            XCTAssertTrue(unionFind.areSame(0, n - 1))
+        }
+    }
+    #endif
 }
