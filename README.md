@@ -15,6 +15,7 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | 深さ優先探索 | `dfs(edges:startedAt:_:)` | [ABC 138 D - Ki](https://atcoder.jp/contests/abc138/submissions/17546144) |
 | 素数判定 | `isPrime` | [ABC 149 C - Next Prime](https://atcoder.jp/contests/abc149/submissions/17548101) |
 | 巡回セールスマン問題 | `tsp(distances:startedAt:)` | [ABC 180 E - Traveling Salesman among Aerial Cities](https://atcoder.jp/contests/abc180/submissions/17561600) |
+| Union-Find | `UnionFind` | [ARC 032 B - 道路工事](https://atcoder.jp/contests/arc032/submissions/17591100) |
 
 ## テスト
 
