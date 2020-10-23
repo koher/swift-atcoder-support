@@ -5,7 +5,7 @@ final class UnionFindTests: XCTestCase {
     func testUnionFind() {
         do {
             let n = 10
-            var unionFind: UnionFind = .init(max: n)
+            var unionFind: UnionFind = .init(count: n)
             
             for i in 0 ..< n { // root
                 XCTAssertEqual(unionFind.root(of: i), i)
@@ -125,7 +125,7 @@ final class UnionFindTests: XCTestCase {
     func testUnionFindPerformance() {
         let n = 10_000_000
         measure {
-            var unionFind: UnionFind = .init(max: n)
+            var unionFind: UnionFind = .init(count: n)
             for i in 1 ..< n {
                 unionFind.unite(i - 1, i)
             }

@@ -2,10 +2,10 @@ struct UnionFind {
     private var parents: [Int]
     private var ranks: [Int]
 
-    init(max: Int) {
-        precondition(max >= 0)
-        self.parents = Array(0 ..< max)
-        self.ranks = Array(repeating: 0, count: max)
+    init(count: Int) {
+        precondition(count >= 0)
+        self.parents = Array(0 ..< count)
+        self.ranks = Array(repeating: 0, count: count)
     }
 
     func root(of i: Int) -> Int {
