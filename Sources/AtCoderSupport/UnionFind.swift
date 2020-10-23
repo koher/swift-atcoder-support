@@ -11,8 +11,13 @@ struct UnionFind {
     }
 
     func root(of i: Int) -> Int {
-        if parents[i] == i { return i }
-        return root(of: parents[i])
+        var current = i
+        while true {
+            let parent = parents[current]
+            if current == parent { break }
+            current = parent
+        }
+        return current
     }
 
     mutating func unite(_ x: Int, _ y: Int) {
