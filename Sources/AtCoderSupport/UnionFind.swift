@@ -1,11 +1,9 @@
 struct UnionFind {
     private var parents: [Int]
     private var ranks: [Int]
-    private let max: Int
 
     init(max: Int) {
         precondition(max >= 0)
-        self.max = max
         self.parents = Array(0 ..< max)
         self.ranks = Array(repeating: 0, count: max)
     }
