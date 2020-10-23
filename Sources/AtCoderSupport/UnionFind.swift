@@ -34,7 +34,7 @@ struct UnionFind {
         }
     }
 
-    func areSame(_ x: Int, _ y: Int) -> Bool {
+    func areInSameSet(_ x: Int, _ y: Int) -> Bool {
         root(of:x) == root(of:y)
     }
 }

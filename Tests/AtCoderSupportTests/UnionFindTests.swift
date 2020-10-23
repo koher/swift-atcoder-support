@@ -13,9 +13,9 @@ final class UnionFindTests: XCTestCase {
             for i in 0 ..< n { // areSame
                 for j in 0 ..< n {
                     if i == j {
-                        XCTAssertTrue(unionFind.areSame(i, j))
+                        XCTAssertTrue(unionFind.areInSameSet(i, j))
                     } else {
-                        XCTAssertFalse(unionFind.areSame(i, j))
+                        XCTAssertFalse(unionFind.areInSameSet(i, j))
                     }
                 }
             }
@@ -31,9 +31,9 @@ final class UnionFindTests: XCTestCase {
                 for i in 0 ..< n { // areSame
                     for j in 0 ..< n {
                         if groups.reduce(false, { $0 || $1.contains(i) && $1.contains(j)}) {
-                            XCTAssertTrue(unionFind.areSame(i, j))
+                            XCTAssertTrue(unionFind.areInSameSet(i, j))
                         } else {
-                            XCTAssertFalse(unionFind.areSame(i, j))
+                            XCTAssertFalse(unionFind.areInSameSet(i, j))
                         }
                     }
                 }
@@ -51,9 +51,9 @@ final class UnionFindTests: XCTestCase {
                 for i in 0 ..< n { // areSame
                     for j in 0 ..< n {
                         if groups.reduce(false, { $0 || $1.contains(i) && $1.contains(j)}) {
-                            XCTAssertTrue(unionFind.areSame(i, j))
+                            XCTAssertTrue(unionFind.areInSameSet(i, j))
                         } else {
-                            XCTAssertFalse(unionFind.areSame(i, j))
+                            XCTAssertFalse(unionFind.areInSameSet(i, j))
                         }
                     }
                 }
@@ -73,9 +73,9 @@ final class UnionFindTests: XCTestCase {
                 for i in 0 ..< n { // areSame
                     for j in 0 ..< n {
                         if groups.reduce(false, { $0 || $1.contains(i) && $1.contains(j)}) {
-                            XCTAssertTrue(unionFind.areSame(i, j))
+                            XCTAssertTrue(unionFind.areInSameSet(i, j))
                         } else {
-                            XCTAssertFalse(unionFind.areSame(i, j))
+                            XCTAssertFalse(unionFind.areInSameSet(i, j))
                         }
                     }
                 }
@@ -111,9 +111,9 @@ final class UnionFindTests: XCTestCase {
                 for i in 0 ..< n { // areSame
                     for j in 0 ..< n {
                         if groups.reduce(false, { $0 || $1.contains(i) && $1.contains(j)}) {
-                            XCTAssertTrue(unionFind.areSame(i, j))
+                            XCTAssertTrue(unionFind.areInSameSet(i, j))
                         } else {
-                            XCTAssertFalse(unionFind.areSame(i, j))
+                            XCTAssertFalse(unionFind.areInSameSet(i, j))
                         }
                     }
                 }
@@ -129,7 +129,7 @@ final class UnionFindTests: XCTestCase {
             for i in 1 ..< n {
                 unionFind.unite(i - 1, i)
             }
-            XCTAssertTrue(unionFind.areSame(0, n - 1))
+            XCTAssertTrue(unionFind.areInSameSet(0, n - 1))
         }
     }
     #endif
