@@ -62,24 +62,26 @@ private struct _PriorityQueue<Element> {
         return first
     }
 }
-protocol HasInfinity {
-    static var infinity: Self { get }
-}
-extension Int: HasInfinity { static var infinity: Int { .max } }
-extension UInt: HasInfinity { static var infinity: UInt { .max } }
-extension Float: HasInfinity {}
-extension Double: HasInfinity {}
-func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt start: Int) -> [Distance] where Distance: Comparable, Distance: AdditiveArithmetic, Distance: HasInfinity {
-    var result: [Distance] = .init(repeating: .infinity, count: graph.count)
+func dijkstra<Distance>(graph: [[(index: Int, distance: Distance)]], startedAt start: Int) -> [Distance?] where Distance: Comparable, Distance: AdditiveArithmetic {
+    var result: [Distance?] = .init(repeating: nil, count: graph.count)
     result[start] = .zero
     var queue = _PriorityQueue<(Distance, Int)>(by: { $0.0 < $1.0 })
     queue.append((.zero, start))
-    while let (distanceFromStart, from) = queue.popFirst() {
-        if result[from] < distanceFromStart { continue }
-        for (to, distance) in graph[from]{
-            if result[from] + distance < result[to] {
-                result[to] = result[from] + distance
-                queue.append((result[to], to))
+    while let (totalDistanceToI, i) = queue.popFirst() {
+        guard let minTotalDistanceToI = result[i] else { preconditionFailure("Never reaches here.") }
+        if minTotalDistanceToI < totalDistanceToI { continue }
+        assert(totalDistanceToI == minTotalDistanceToI)
+        for (j, distance) in graph[i] {
+            if let totalDistanceToJ = result[j] {
+                if totalDistanceToI + distance < totalDistanceToJ {
+                    let newTotalDistanceToJ = totalDistanceToI + distance
+                    result[j] = newTotalDistanceToJ
+                    queue.append((newTotalDistanceToJ, j))
+                }
+            } else {
+                let newTotalDistanceToJ = totalDistanceToI + distance
+                result[j] = newTotalDistanceToJ
+                queue.append((newTotalDistanceToJ, j))
             }
         }
     }

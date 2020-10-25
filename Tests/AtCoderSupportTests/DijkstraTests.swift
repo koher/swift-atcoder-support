@@ -56,6 +56,26 @@ final class DijkstraTests: XCTestCase {
             let r = dijkstra(graph: graph, startedAt: 1)
             XCTAssertEqual(r, [2.0, 0.0, 5.0])
         }
+        do { // 到達不能ノード
+            let graph: [[(index: Int, distance: Double)]] = [
+                [
+                    (index: 1, distance: 2.0),
+                    (index: 2, distance: 3.0),
+                ],
+                [
+                    (index: 0, distance: 2.0),
+                    (index: 2, distance: 5.0),
+                ],
+                [
+                    (index: 0, distance: 3.0),
+                    (index: 1, distance: 5.0),
+                ],
+                [
+                ]
+            ]
+            let r = dijkstra(graph: graph, startedAt: 0)
+            XCTAssertEqual(r, [0.0, 2.0, 3.0, nil])
+        }
     }
     
     #if !DEBUG
