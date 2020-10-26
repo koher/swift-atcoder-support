@@ -289,4 +289,66 @@ final class BFSTests: XCTestCase {
             }
         }
     }
+
+    #if !DEBUG
+    func testBFSPerformance() {
+        let n = (1 << 20) - 1
+        let edges: [[Int]] = (1 ... n).map {
+            let left = $0 << 1
+            let right = left + 1
+            if right <= n {
+                return [left - 1, right - 1]
+            } else if left <= n {
+                return [left - 1]
+            } else {
+                return []
+            }
+        }
+        measure {
+            var count = 0
+            bfs(edges: edges, startedAt: 0) { _ in count += 1 }
+            XCTAssertEqual(count, edges.count)
+        }
+    }
+    
+    func testBFSWithPrevPerformance() {
+        let n = (1 << 20) - 1
+        let edges: [[Int]] = (1 ... n).map {
+            let left = $0 << 1
+            let right = left + 1
+            if right <= n {
+                return [left - 1, right - 1]
+            } else if left <= n {
+                return [left - 1]
+            } else {
+                return []
+            }
+        }
+        measure {
+            var count = 0
+            bfs(edges: edges, startedAt: 0) { _, _ in count += 1 }
+            XCTAssertEqual(count, edges.count)
+        }
+    }
+    
+    func testBFSWithPrevDepthPerformance() {
+        let n = (1 << 20) - 1
+        let edges: [[Int]] = (1 ... n).map {
+            let left = $0 << 1
+            let right = left + 1
+            if right <= n {
+                return [left - 1, right - 1]
+            } else if left <= n {
+                return [left - 1]
+            } else {
+                return []
+            }
+        }
+        measure {
+            var count = 0
+            bfs(edges: edges, startedAt: 0) { _, _, _ in count += 1 }
+            XCTAssertEqual(count, edges.count)
+        }
+    }
+    #endif
 }
