@@ -290,6 +290,7 @@ final class DFSTests: XCTestCase {
         }
     }
     
+    #if !DEBUG
     func testDFSPerformance() {
         let n = (1 << 20) - 1
         let edges: [[Int]] = (1 ... n).map {
@@ -310,7 +311,6 @@ final class DFSTests: XCTestCase {
         }
     }
     
-    #if !DEBUG
     func testDFSWithPrevPerformance() {
         let n = (1 << 20) - 1
         let edges: [[Int]] = (1 ... n).map {
