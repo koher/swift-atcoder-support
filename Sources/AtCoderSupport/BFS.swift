@@ -1,18 +1,15 @@
 func bfs(edges: [[Int]], startedAt start: Int, _ operation: (Int) -> Void) {
     precondition(edges.indices.contains(start), "`start` index is out of bounds: \(start)")
     var isVisited: [Bool] = .init(repeating: false, count: edges.count)
-    var nexts: [Int] = [start]
-    while !nexts.isEmpty {
-        var destinations: [Int] = []
-        for current in nexts {
-            if isVisited[current] { continue }
-            operation(current)
-            isVisited[current] = true
-            for destination in edges[current] {
-                destinations.append(destination)
-            }
+    var destinations: ArraySlice<Int> = [start]
+    destinations.reserveCapacity(edges.count)
+    while let current = destinations.popFirst() {
+        if isVisited[current] { continue }
+        operation(current)
+        isVisited[current] = true
+        for destination in edges[current] {
+            destinations.append(destination)
         }
-        nexts = destinations
     }
 }
 
