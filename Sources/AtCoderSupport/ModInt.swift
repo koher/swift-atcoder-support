@@ -6,12 +6,12 @@ struct ModInt: AdditiveArithmetic, ExpressibleByIntegerLiteral, CustomStringConv
     }
     init(_ value: Int) {
         if value < 0 {
-            self.init(UInt(value % Int(modulus)) + modulus)
+            self.init(UInt(value % Int(modulus) + Int(modulus)))
         } else {
             self.init(UInt(value))
         }
     }
-    init(integerLiteral value: UInt) {
+    init(integerLiteral value: Int) {
         self.init(value)
     }
     static func +(lhs: Self, rhs: Self) -> Self {
