@@ -2,6 +2,41 @@ import XCTest
 @testable import AtCoderSupport
 
 final class ModIntTests: XCTestCase {
+    func testInit() {
+        do {
+            let r: ModInt = 0
+            XCTAssertEqual(r.value, 0)
+        }
+        do {
+            let r: ModInt = 1
+            XCTAssertEqual(r.value, 1)
+        }
+        do {
+            let r: ModInt = .init(modulus - 1)
+            XCTAssertEqual(r.value, modulus - 1)
+        }
+        do {
+            let r: ModInt = .init(modulus)
+            XCTAssertEqual(r.value, 0)
+        }
+        do {
+            let r: ModInt = .init(modulus + 1)
+            XCTAssertEqual(r.value, 1)
+        }
+        do {
+            let r: ModInt = .init(modulus * 10 + 42)
+            XCTAssertEqual(r.value, 42)
+        }
+        do {
+            let r: ModInt = -1
+            XCTAssertEqual(r.value, modulus - 1)
+        }
+        do {
+            let r: ModInt = .init(Int(modulus) * -10 - 42)
+            XCTAssertEqual(r.value, modulus - 42)
+        }
+    }
+    
     func testPlus() {
         do {
             let n = modulus - 1
