@@ -17,6 +17,7 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | ダイクストラ法 | `dijkstra(graph:startedAt:)` | [ABC 035 D - トレジャーハント](https://atcoder.jp/contests/abc035/submissions/17662367) |
 | 巡回セールスマン問題 | `tsp(distances:startedAt:)` | [ABC 180 E - Traveling Salesman among Aerial Cities](https://atcoder.jp/contests/abc180/submissions/17561600) |
 | Union-Find | `UnionFind` | [ARC 032 B - 道路工事](https://atcoder.jp/contests/arc032/submissions/17591100) |
+| mod | `ModInt` | [ARC 107 A - Simple Math](https://atcoder.jp/contests/arc107/submissions/17766344) |
 
 ## テスト
 
