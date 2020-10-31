@@ -140,4 +140,10 @@ final class ModIntTests: XCTestCase {
             XCTAssertEqual(r.value, (n + n) % modulus)
         }
     }
+    
+    func testDescription() {
+        XCTAssertEqual(ModInt(0).description, 0.description)
+        XCTAssertEqual(ModInt(42).description, 42.description)
+        XCTAssertEqual(ModInt(-1).description, (modulus - 1).description)
+    }
 }
