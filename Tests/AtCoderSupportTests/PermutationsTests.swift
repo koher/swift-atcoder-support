@@ -89,6 +89,24 @@ final class PermutationsTests: XCTestCase {
         }
     }
     
+    func testNpr() {
+        XCTAssertEqual(npr(5, 0), 1)
+        XCTAssertEqual(npr(5, 1), 5)
+        XCTAssertEqual(npr(5, 2), 20)
+        XCTAssertEqual(npr(5, 3), 60)
+        XCTAssertEqual(npr(5, 4), 120)
+        XCTAssertEqual(npr(5, 5), 120)
+        
+        XCTAssertEqual(npr(0, 0), 1)
+
+        XCTAssertEqual(npr(5, 0, modulus: 7), 1)
+        XCTAssertEqual(npr(5, 1, modulus: 7), 5)
+        XCTAssertEqual(npr(5, 2, modulus: 7), 6)
+        XCTAssertEqual(npr(5, 3, modulus: 7), 4)
+        XCTAssertEqual(npr(5, 4, modulus: 7), 1)
+        XCTAssertEqual(npr(5, 5, modulus: 7), 1)
+    }
+    
     #if !DEBUG
     func testPermutatinsPerformance() {
         measure {
