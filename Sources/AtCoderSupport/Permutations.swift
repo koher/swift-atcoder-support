@@ -19,14 +19,14 @@ extension Sequence {
     }
 }
 
-func npr(_ n: Int, _ r: Int, modulus: Int? = nil) -> Int {
+func npr<Integer>(_ n: Integer, _ r: Integer, modulus: Integer? = nil) -> Integer where Integer: BinaryInteger, Integer.Stride: SignedInteger {
     precondition(n >= 0)
     precondition(r >= 0)
     precondition(n >= r)
     if let modulus = modulus {
         precondition(modulus >= 1)
-        return (n - r + 1 ..< n + 1).reduce(into: 1) { $0 = ($0 * $1) % modulus }
+        return (n - r + 1 ..< n + 1).reduce(into: 1 as Integer) { $0 = ($0 * $1) % modulus }
     } else {
-        return (n - r + 1 ..< n + 1).reduce(into: 1) { $0 *= $1 }
+        return (n - r + 1 ..< n + 1).reduce(into: 1 as Integer) { $0 *= $1 }
     }
 }

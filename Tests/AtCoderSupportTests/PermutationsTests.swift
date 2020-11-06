@@ -105,6 +105,8 @@ final class PermutationsTests: XCTestCase {
         XCTAssertEqual(npr(5, 3, modulus: 7), 4)
         XCTAssertEqual(npr(5, 4, modulus: 7), 1)
         XCTAssertEqual(npr(5, 5, modulus: 7), 1)
+        
+        XCTAssertEqual(npr(5 as UInt, 3), 60)
     }
     
     #if !DEBUG

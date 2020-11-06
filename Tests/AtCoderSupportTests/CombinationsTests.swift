@@ -22,5 +22,7 @@ final class CombinationsTests: XCTestCase {
         XCTAssertEqual(ncr(7, 5, modulus: 11), 10)
         XCTAssertEqual(ncr(7, 6, modulus: 11), 7)
         XCTAssertEqual(ncr(7, 7, modulus: 11), 1)
+        
+        XCTAssertEqual(ncr(7 as UInt, 4), 35)
     }
 }
