@@ -33,5 +33,6 @@ final class PowTests: XCTestCase {
         XCTAssertEqual(pow(2, 10, modulus: 7), 2)
         
         XCTAssertEqual(pow(123456789, 2, modulus: 998244353), (123456789 * 123456789) % 998244353)
+        XCTAssertEqual((6 * pow(3, 998244353 - 2, modulus: 998244353)) % 998244353, 2) // 6 / 3 = 2
     }
 }

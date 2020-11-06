@@ -9,7 +9,7 @@ func pow<Integer>(_ a: Integer, _ b: Integer, modulus: Integer? = nil) -> Intege
             }
             b >>= 1
             guard b > 0 else { break }
-            a *= a
+            a = (a * a) % modulus
         }
     } else {
         while true {
