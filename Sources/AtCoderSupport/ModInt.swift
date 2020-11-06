@@ -1,4 +1,4 @@
-let modulus: UInt = 998244353
+let modulus: UInt = 998244353 // FIXME: 問題に合わせて修正
 struct ModInt: AdditiveArithmetic, ExpressibleByIntegerLiteral, CustomStringConvertible, Hashable {
     let value: UInt
     init(_ value: UInt) {
