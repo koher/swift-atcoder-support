@@ -25,6 +25,7 @@ func ncr<Integer>(_ n: Integer, _ r: Integer, modulus: Integer? = nil) -> Intege
         let denominator = npr(r, r, modulus: modulus)
         return (numerator * pow(denominator, modulus - 2, modulus: modulus)) % modulus
     } else {
-        return (1 ..< r + 1).reduce(into: 1 as Integer) { $0 = $0 * (n - $1 + 1) / $1 }
+        let range: Range<Integer> = 1 ..< r + 1
+        return range.reduce(into: 1 as Integer) { $0 = $0 * (n - $1 + 1) / $1 }
     }
 }
