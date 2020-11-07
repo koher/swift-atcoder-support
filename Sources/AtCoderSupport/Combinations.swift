@@ -1,4 +1,4 @@
-func ncr<Integer>(_ n: Integer, _ r: Integer, modulus: Integer? = nil) -> Integer where Integer: BinaryInteger, Integer.Stride: SignedInteger {
+func ncr<Integer>(_ n: Integer, _ r: Integer, modulus: Integer?) -> Integer where Integer: BinaryInteger, Integer.Stride: SignedInteger {
     precondition(n >= 0)
     precondition(r >= 0)
     precondition(n >= r)

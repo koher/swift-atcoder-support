@@ -1,4 +1,4 @@
-func pow<Integer>(_ a: Integer, _ b: Integer, modulus: Integer? = nil) -> Integer where Integer: BinaryInteger {
+func pow<Integer>(_ a: Integer, _ b: Integer, modulus: Integer?) -> Integer where Integer: BinaryInteger {
     var result: Integer = 1
     var a = a
     var b = b

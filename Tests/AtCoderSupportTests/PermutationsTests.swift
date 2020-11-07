@@ -90,14 +90,14 @@ final class PermutationsTests: XCTestCase {
     }
     
     func testNpr() {
-        XCTAssertEqual(npr(5, 0), 1)
-        XCTAssertEqual(npr(5, 1), 5)
-        XCTAssertEqual(npr(5, 2), 20)
-        XCTAssertEqual(npr(5, 3), 60)
-        XCTAssertEqual(npr(5, 4), 120)
-        XCTAssertEqual(npr(5, 5), 120)
+        XCTAssertEqual(npr(5, 0, modulus: nil), 1)
+        XCTAssertEqual(npr(5, 1, modulus: nil), 5)
+        XCTAssertEqual(npr(5, 2, modulus: nil), 20)
+        XCTAssertEqual(npr(5, 3, modulus: nil), 60)
+        XCTAssertEqual(npr(5, 4, modulus: nil), 120)
+        XCTAssertEqual(npr(5, 5, modulus: nil), 120)
         
-        XCTAssertEqual(npr(0, 0), 1)
+        XCTAssertEqual(npr(0, 0, modulus: nil), 1)
 
         XCTAssertEqual(npr(5, 0, modulus: 7), 1)
         XCTAssertEqual(npr(5, 1, modulus: 7), 5)
@@ -106,7 +106,8 @@ final class PermutationsTests: XCTestCase {
         XCTAssertEqual(npr(5, 4, modulus: 7), 1)
         XCTAssertEqual(npr(5, 5, modulus: 7), 1)
         
-        XCTAssertEqual(npr(5 as UInt, 3), 60)
+        XCTAssertEqual(npr(5 as UInt, 3, modulus: nil), 60)
+        XCTAssertEqual(npr(5, 3, modulus: 998244353), 60)
     }
     
     #if !DEBUG
