@@ -17,7 +17,7 @@ func ncr<Integer>(_ n: Integer, _ r: Integer, modulus: Integer? = nil) -> Intege
                 }
                 b >>= 1
                 guard b > .zero else { break }
-                a *= a
+                a = (a * a) % modulus
             }
             return result
         }
