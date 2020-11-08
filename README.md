@@ -11,6 +11,7 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | アルゴリズム・データ構造 | API | 利用例 |
 |:--|:--|:--|
 | 順列 | `permutations()` | [ABC 145 C - Average Length](https://atcoder.jp/contests/abc145/submissions/17547859) |
+| nCr | `NCR` | [ABC 151 E - Max-Min Sums](https://atcoder.jp/contests/abc151/submissions/17937622) |
 | 二分探索 | `values(_:_:)` | [ABC 077 C - Snuke Festival](https://atcoder.jp/contests/abc077/submissions/17547635) |
 | 深さ優先探索 | `dfs(edges:startedAt:_:)` | [ABC 138 D - Ki](https://atcoder.jp/contests/abc138/submissions/17661705) |
 | 素数判定 | `isPrime` | [ABC 149 C - Next Prime](https://atcoder.jp/contests/abc149/submissions/17548101) |
@@ -19,7 +20,6 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | Union-Find | `UnionFind` | [ARC 032 B - 道路工事](https://atcoder.jp/contests/arc032/submissions/17591100) |
 | mod | `ModInt` | [ARC 107 A - Simple Math](https://atcoder.jp/contests/arc107/submissions/17766344) |
 | 範囲の和 | `ClosedRange.sum(modulus:)` | [ARC 107 A - Simple Math](https://atcoder.jp/contests/arc107/submissions/17766344) |
-| nCr, mod | `NCR` | [ABC 151 E - Max-Min Sums](https://atcoder.jp/contests/abc151/submissions/17937622) |
 
 ## テスト
 
