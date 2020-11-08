@@ -19,6 +19,7 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | Union-Find | `UnionFind` | [ARC 032 B - 道路工事](https://atcoder.jp/contests/arc032/submissions/17591100) |
 | mod | `ModInt` | [ARC 107 A - Simple Math](https://atcoder.jp/contests/arc107/submissions/17766344) |
 | 範囲の和 | `ClosedRange.sum(modulus:)` | [ARC 107 A - Simple Math](https://atcoder.jp/contests/arc107/submissions/17766344) |
+| nCr, mod | `NCR` | [ABC 151 E - Max-Min Sums](https://atcoder.jp/contests/abc151/submissions/17937622) |
 
 ## テスト
 
