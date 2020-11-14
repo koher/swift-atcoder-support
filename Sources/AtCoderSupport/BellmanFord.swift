@@ -9,6 +9,7 @@
 /// - Returns: 0 番目の要素は`start` から各頂点への最短距離。到達不能な頂点への最短距離は `nil` 。
 ///            1 番目の要素 `hasNegativeWeightCycle` は負の閉路を持つかを表すフラグ。
 func bellmanFord<Distance>(graph: (count: Int, edges: [(from: Int, to: Int, distance: Distance)]), startedAt start: Int) -> ([Distance?], hasNegativeWeightCycles: Bool) where Distance: Comparable, Distance: AdditiveArithmetic {
+    precondition(graph.count > 0)
     var hasNegativeWeightCycles: Bool = false
     var result: [Distance?] = .init(repeating: nil, count: graph.count)
     result[start] = .zero
