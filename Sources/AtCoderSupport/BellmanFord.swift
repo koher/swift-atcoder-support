@@ -13,19 +13,19 @@ func bellmanFord<Distance>(graph: (count: Int, edges: [(from: Int, to: Int, dist
     var result: [Distance?] = .init(repeating: nil, count: graph.count)
     result[start] = .zero
     
+    let finalRound = graph.count - 1
     for round in 0 ..< graph.count {
         for (i, j, distance) in graph.edges {
-            if let totalDistanceToI = result[i] {
-                let newTotalDistanceToJ = totalDistanceToI + distance
-                if let totalDistanceToJ = result[j] {
-                    if newTotalDistanceToJ < totalDistanceToJ {
-                        result[j] = newTotalDistanceToJ
-                        if round == graph.count - 1 { hasNegativeWeightCycles = true }
-                    }
-                } else {
+            guard let totalDistanceToI = result[i] else { continue }
+            let newTotalDistanceToJ = totalDistanceToI + distance
+            if let totalDistanceToJ = result[j] {
+                if newTotalDistanceToJ < totalDistanceToJ {
                     result[j] = newTotalDistanceToJ
-                    if round == graph.count - 1 { hasNegativeWeightCycles = true }
+                    if round == finalRound { hasNegativeWeightCycles = true }
                 }
+            } else {
+                result[j] = newTotalDistanceToJ
+                if round == finalRound { hasNegativeWeightCycles = true }
             }
         }
     }
