@@ -89,6 +89,8 @@ final class WarshallFloydTests: XCTestCase {
             XCTAssertTrue(graph[1][1]! < 0)
             XCTAssertTrue(graph[2][2]! < 0)
             XCTAssertTrue(graph[4][4]! < 0)
+            XCTAssertEqual(graph[5], [nil, nil, nil, nil, nil, 0, 6])
+            XCTAssertEqual(graph[6], [nil, nil, nil, nil, nil, 6, 0])
         }
     }
 }
