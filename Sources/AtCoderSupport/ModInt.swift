@@ -1,12 +1,12 @@
-let modulus: UInt = 998244353 // FIXME: 問題に合わせて修正
 struct ModInt: AdditiveArithmetic, ExpressibleByIntegerLiteral, CustomStringConvertible, Hashable {
+    static var modulus: UInt! // FIXME: 問題に合わせて修正
     let value: UInt
     init(_ value: UInt) {
-        self.value = value % modulus
+        self.value = value % Self.modulus
     }
     init(_ value: Int) {
         if value < 0 {
-            self.init(UInt(value % Int(modulus) + Int(modulus)))
+            self.init(UInt(value % Int(Self.modulus) + Int(Self.modulus)))
         } else {
             self.init(UInt(value))
         }

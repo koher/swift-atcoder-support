@@ -1,5 +1,7 @@
+var modulus: Int! // FIXME: 問題に合わせて修正
+private var _modulus: Int { modulus }
 extension BinaryInteger {
-    static var modulus: Self { 998244353 } // FIXME: 問題に合わせて修正
+    static var modulus: Self { Self(_modulus) }
 }
 infix operator %+: AdditionPrecedence
 infix operator %-: AdditionPrecedence

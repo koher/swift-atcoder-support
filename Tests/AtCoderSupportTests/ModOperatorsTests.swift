@@ -2,6 +2,10 @@ import XCTest
 @testable import AtCoderSupport
 
 final class ModOperatorsTests: XCTestCase {
+    override class func setUp() {
+        modulus = 998244353
+    }
+    
     func testPlus() {
         XCTAssertEqual(1 %+ 1, 2)
         XCTAssertEqual((Int.modulus - 1) %+ 1, 0)
