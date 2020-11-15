@@ -16,8 +16,9 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | 二分探索 | `values(_:_:)` | [ABC 077 C - Snuke Festival](https://atcoder.jp/contests/abc077/submissions/17547635) |
 | 深さ優先探索 | `dfs(edges:startedAt:_:)` | [ABC 138 D - Ki](https://atcoder.jp/contests/abc138/submissions/17661705) |
 | 素数判定 | `isPrime` | [ABC 149 C - Next Prime](https://atcoder.jp/contests/abc149/submissions/17548101) |
+| ベルマン–フォード法 | `bellmanFord(graph:startedAt)` | [](https://atcoder.jp/contests/abc061/submissions/18111027) |
 | ダイクストラ法 | `dijkstra(graph:startedAt:)` | [ABC 035 D - トレジャーハント](https://atcoder.jp/contests/abc035/submissions/17662367) |
-| ワーシャル-フロイド法 | `warshallFloyd(graph:)` | [ABC 143 E - Travel by Car](https://atcoder.jp/contests/abc143/submissions/18082582) |
+| ワーシャル–フロイド法 | `warshallFloyd(graph:)` | [ABC 143 E - Travel by Car](https://atcoder.jp/contests/abc143/submissions/18082582) |
 | 巡回セールスマン問題 | `tsp(distances:startedAt:)` | [ABC 180 E - Traveling Salesman among Aerial Cities](https://atcoder.jp/contests/abc180/submissions/17561600) |
 | Union-Find | `UnionFind` | [ARC 032 B - 道路工事](https://atcoder.jp/contests/arc032/submissions/17591100) |
 | mod | `ModInt` | [ARC 107 A - Simple Math](https://atcoder.jp/contests/arc107/submissions/17766344) |
