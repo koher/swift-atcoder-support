@@ -73,6 +73,11 @@ final class Array2DTests: XCTestCase {
             XCTAssertEqual(a[4, -1], -1)
             XCTAssertEqual(a[-1, 3], -1)
             XCTAssertEqual(a[4, 3], -1)
+            
+            XCTAssertEqual(a[-1, 0], -1)
+            XCTAssertEqual(a[0, -1], -1)
+            XCTAssertEqual(a[4, 0], -1)
+            XCTAssertEqual(a[0, 3], -1)
         }
     }
     
@@ -104,6 +109,11 @@ final class Array2DTests: XCTestCase {
             a[-1, 3] = -100
             a[4, 3] = -100
 
+            a[-1, 0] = -100
+            a[0, -1] = -100
+            a[4, 0] = -100
+            a[0, 3] = -100
+
             XCTAssertEqual(a[0, 0], 100)
             XCTAssertEqual(a[1, 0], 200)
             XCTAssertEqual(a[2, 0], 300)
@@ -123,6 +133,11 @@ final class Array2DTests: XCTestCase {
             XCTAssertEqual(a[4, -1], -1)
             XCTAssertEqual(a[-1, 3], -1)
             XCTAssertEqual(a[4, 3], -1)
+            
+            XCTAssertEqual(a[-1, 0], -1)
+            XCTAssertEqual(a[0, -1], -1)
+            XCTAssertEqual(a[4, 0], -1)
+            XCTAssertEqual(a[0, 3], -1)
         }
     }
 }
