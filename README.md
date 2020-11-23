@@ -11,6 +11,8 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | アルゴリズム・データ構造 | API | 利用例 |
 |:--|:--|:--|
 | 二次元配列 | `Array2D` | [ABC 182 E - Akari](https://atcoder.jp/contests/abc182/submissions/17978677) |
+| 三次元配列 | `Array3D` | [ABC 184 D - increment of coins](https://atcoder.jp/contests/abc184/submissions/18377096) |
+| N次元配列 | `ArrayND` | [ABC 184 D - increment of coins](https://atcoder.jp/contests/abc184/submissions/18377137) |
 | 順列 | `permutations()` | [ABC 145 C - Average Length](https://atcoder.jp/contests/abc145/submissions/17547859) |
 | nCr | `NCR` | [ABC 151 E - Max-Min Sums](https://atcoder.jp/contests/abc151/submissions/17937622) |
 | 二分探索 | `values(_:_:)` | [ABC 077 C - Snuke Festival](https://atcoder.jp/contests/abc077/submissions/17547635) |

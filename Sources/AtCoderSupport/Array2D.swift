@@ -13,7 +13,7 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     init(width: Int, height: Int, element: Element, outside: Element? = nil) {
         self.init(width: width, height: height, elements: [Element](repeating: element, count: width * height), outside: outside)
     }
-    var count: Int { width * height }
+    var count: Int { elements.count }
     var xRange: Range<Int> { 0 ..< width }
     var yRange: Range<Int> { 0 ..< height }
     private func indexAt(x: Int, y: Int) -> Int? {
