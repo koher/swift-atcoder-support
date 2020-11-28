@@ -420,6 +420,66 @@ final class BFSTests: XCTestCase {
         }
         measure {
             var count = 0
+            bfs(graph: graph, startedAt: 0) { (_: Int) in count += 1 }
+            XCTAssertEqual(count, graph.count)
+        }
+    }
+    
+    func testBFSWithPrevPerformance() {
+        let n = (1 << 20) - 1
+        let graph: [[Int]] = (1 ... n).map {
+            let left = $0 << 1
+            let right = left + 1
+            if right <= n {
+                return [left - 1, right - 1]
+            } else if left <= n {
+                return [left - 1]
+            } else {
+                return []
+            }
+        }
+        measure {
+            var count = 0
+            bfs(graph: graph, startedAt: 0) { _, _ in count += 1 }
+            XCTAssertEqual(count, graph.count)
+        }
+    }
+    
+    func testBFSWithPrevDepthPerformance() {
+        let n = (1 << 20) - 1
+        let graph: [[Int]] = (1 ... n).map {
+            let left = $0 << 1
+            let right = left + 1
+            if right <= n {
+                return [left - 1, right - 1]
+            } else if left <= n {
+                return [left - 1]
+            } else {
+                return []
+            }
+        }
+        measure {
+            var count = 0
+            bfs(graph: graph, startedAt: 0) { _, _, _ in count += 1 }
+            XCTAssertEqual(count, graph.count)
+        }
+    }
+    
+    func testBFSPerformanceWithPath() {
+        let n = (1 << 20) - 1
+        let graph: [[Int]] = (1 ... n).map {
+            let left = $0 << 1
+            let right = left + 1
+            if right <= n {
+                return [left - 1, right - 1]
+            } else if left <= n {
+                return [left - 1]
+            } else {
+                return []
+            }
+        }
+        measure {
+            var count = 0
             bfs(graph: graph, startedAt: 0) { (_: LinkedList<Int>) in count += 1 }
             XCTAssertEqual(count, graph.count)
         }
