@@ -24,6 +24,12 @@ struct LinkedList<Element>: Sequence, IteratorProtocol, ExpressibleByArrayLitera
         case .some(_, next: _, count: _): return false
         }
     }
+    var first: Element? {
+        switch node {
+        case .none: return nil
+        case .some(let element, next: _, count: _): return element
+        }
+    }
     mutating func appendFirst(_ element: Element) {
         node = .some(element, next: self, count: count + 1)
     }

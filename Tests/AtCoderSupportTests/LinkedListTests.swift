@@ -48,6 +48,17 @@ final class LinkedListTests: XCTestCase {
         }
     }
     
+    func testFirst() {
+        do {
+            let a: LinkedList<Int> = []
+            XCTAssertNil(a.first)
+        }
+        do {
+            let a: LinkedList<Int> = [2, 3, 5]
+            XCTAssertEqual(a.first, 2)
+        }
+    }
+    
     func testAppendFirst() {
         do {
             var a: LinkedList<Int> = [1, 1, 2, 3, 5, 8]
