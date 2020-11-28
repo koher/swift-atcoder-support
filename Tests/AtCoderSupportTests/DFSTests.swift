@@ -8,7 +8,7 @@ final class DFSTests: XCTestCase {
             //     |       +-> 4
             //     +-> 2 --+-> 5
             //             +-> 6
-            let edges = [
+            let graph = [
                 [1, 2],
                 [3, 4],
                 [5, 6],
@@ -20,21 +20,21 @@ final class DFSTests: XCTestCase {
             
             do {
                 var r: [Int] = []
-                dfs(edges: edges, startedAt: 0) { i in
+                dfs(graph: graph, startedAt: 0) { i in
                     r.append(i)
                 }
                 XCTAssertEqual(r, [0, 1, 3, 4, 2, 5, 6])
             }
             do { // Subtrees
                 var r: [Int] = []
-                dfs(edges: edges, startedAt: 2) { i in
+                dfs(graph: graph, startedAt: 2) { i in
                     r.append(i)
                 }
                 XCTAssertEqual(r, [2, 5, 6])
             }
             do { // Leaves
                 var r: [Int] = []
-                dfs(edges: edges, startedAt: 4) { i in
+                dfs(graph: graph, startedAt: 4) { i in
                     r.append(i)
                 }
                 XCTAssertEqual(r, [4])
@@ -46,7 +46,7 @@ final class DFSTests: XCTestCase {
             // ^^   |       +-> 4 --> 0
             // ||   +-> 2 <-+-> 5 --> 0
             // ++           +-> 6 --> 0
-            let edges = [
+            let graph = [
                 [0, 1, 2],
                 [0, 3, 4],
                 [0, 5, 6],
@@ -58,21 +58,21 @@ final class DFSTests: XCTestCase {
             
             do {
                 var r: [Int] = []
-                dfs(edges: edges, startedAt: 0) { i in
+                dfs(graph: graph, startedAt: 0) { i in
                     r.append(i)
                 }
                 XCTAssertEqual(r, [0, 1, 3, 4, 2, 5, 6])
             }
             do {
                 var r: [Int] = []
-                dfs(edges: edges, startedAt: 2) { i in
+                dfs(graph: graph, startedAt: 2) { i in
                     r.append(i)
                 }
                 XCTAssertEqual(r, [2, 0, 1, 3, 4, 5, 6])
             }
             do {
                 var r: [Int] = []
-                dfs(edges: edges, startedAt: 4) { i in
+                dfs(graph: graph, startedAt: 4) { i in
                     r.append(i)
                 }
                 XCTAssertEqual(r, [4, 1, 0, 2, 5, 6, 3])
@@ -86,7 +86,7 @@ final class DFSTests: XCTestCase {
             //     |       +-> 4
             //     +-> 2 --+-> 5
             //             +-> 6
-            let edges = [
+            let graph = [
                 [1, 2],
                 [3, 4],
                 [5, 6],
@@ -99,7 +99,7 @@ final class DFSTests: XCTestCase {
             do {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
-                dfs(edges: edges, startedAt: 0) { current, prev in
+                dfs(graph: graph, startedAt: 0) { current, prev in
                     currents.append(current)
                     prevs.append(prev)
                 }
@@ -109,7 +109,7 @@ final class DFSTests: XCTestCase {
             do { // Subtrees
                 var currents: [Int] = []
                 var prevs: [Int?] = []
-                dfs(edges: edges, startedAt: 2) { current, prev in
+                dfs(graph: graph, startedAt: 2) { current, prev in
                     currents.append(current)
                     prevs.append(prev)
                 }
@@ -119,7 +119,7 @@ final class DFSTests: XCTestCase {
             do { // Leaves
                 var currents: [Int] = []
                 var prevs: [Int?] = []
-                dfs(edges: edges, startedAt: 4) { current, prev in
+                dfs(graph: graph, startedAt: 4) { current, prev in
                     currents.append(current)
                     prevs.append(prev)
                 }
@@ -146,7 +146,7 @@ final class DFSTests: XCTestCase {
             do {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
-                dfs(edges: edges, startedAt: 0) { current, prev in
+                dfs(graph: edges, startedAt: 0) { current, prev in
                     currents.append(current)
                     prevs.append(prev)
                 }
@@ -156,7 +156,7 @@ final class DFSTests: XCTestCase {
             do {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
-                dfs(edges: edges, startedAt: 2) { current, prev in
+                dfs(graph: edges, startedAt: 2) { current, prev in
                     currents.append(current)
                     prevs.append(prev)
                 }
@@ -166,7 +166,7 @@ final class DFSTests: XCTestCase {
             do {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
-                dfs(edges: edges, startedAt: 4) { current, prev in
+                dfs(graph: edges, startedAt: 4) { current, prev in
                     currents.append(current)
                     prevs.append(prev)
                 }
@@ -182,7 +182,7 @@ final class DFSTests: XCTestCase {
             //     |       +-> 4
             //     +-> 2 --+-> 5
             //             +-> 6
-            let edges = [
+            let graph = [
                 [1, 2],
                 [3, 4],
                 [5, 6],
@@ -196,7 +196,7 @@ final class DFSTests: XCTestCase {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
                 var depths: [Int] = []
-                dfs(edges: edges, startedAt: 0) { current, prev, depth in
+                dfs(graph: graph, startedAt: 0) { current, prev, depth in
                     currents.append(current)
                     prevs.append(prev)
                     depths.append(depth)
@@ -209,7 +209,7 @@ final class DFSTests: XCTestCase {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
                 var depths: [Int] = []
-                dfs(edges: edges, startedAt: 2) { current, prev, depth in
+                dfs(graph: graph, startedAt: 2) { current, prev, depth in
                     currents.append(current)
                     prevs.append(prev)
                     depths.append(depth)
@@ -222,7 +222,7 @@ final class DFSTests: XCTestCase {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
                 var depths: [Int] = []
-                dfs(edges: edges, startedAt: 4) { current, prev, depth in
+                dfs(graph: graph, startedAt: 4) { current, prev, depth in
                     currents.append(current)
                     prevs.append(prev)
                     depths.append(depth)
@@ -238,7 +238,7 @@ final class DFSTests: XCTestCase {
             // ^^   |       +-> 4 --> 0
             // ||   +-> 2 <-+-> 5 --> 0
             // ++           +-> 6 --> 0
-            let edges = [
+            let graph = [
                 [0, 1, 2],
                 [0, 3, 4],
                 [0, 5, 6],
@@ -252,7 +252,7 @@ final class DFSTests: XCTestCase {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
                 var depths: [Int] = []
-                dfs(edges: edges, startedAt: 0) { current, prev, depth in
+                dfs(graph: graph, startedAt: 0) { current, prev, depth in
                     currents.append(current)
                     prevs.append(prev)
                     depths.append(depth)
@@ -265,7 +265,7 @@ final class DFSTests: XCTestCase {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
                 var depths: [Int] = []
-                dfs(edges: edges, startedAt: 2) { current, prev, depth in
+                dfs(graph: graph, startedAt: 2) { current, prev, depth in
                     currents.append(current)
                     prevs.append(prev)
                     depths.append(depth)
@@ -278,7 +278,7 @@ final class DFSTests: XCTestCase {
                 var currents: [Int] = []
                 var prevs: [Int?] = []
                 var depths: [Int] = []
-                dfs(edges: edges, startedAt: 4) { current, prev, depth in
+                dfs(graph: graph, startedAt: 4) { current, prev, depth in
                     currents.append(current)
                     prevs.append(prev)
                     depths.append(depth)
@@ -409,7 +409,7 @@ final class DFSTests: XCTestCase {
     #if !DEBUG
     func testDFSPerformance() {
         let n = (1 << 20) - 1
-        let edges: [[Int]] = (1 ... n).map {
+        let graph: [[Int]] = (1 ... n).map {
             let left = $0 << 1
             let right = left + 1
             if right <= n {
@@ -422,14 +422,14 @@ final class DFSTests: XCTestCase {
         }
         measure {
             var count = 0
-            dfs(edges: edges, startedAt: 0) { (_: Int) in count += 1 }
-            XCTAssertEqual(count, edges.count)
+            dfs(graph: graph, startedAt: 0) { (_: Int) in count += 1 }
+            XCTAssertEqual(count, graph.count)
         }
     }
     
     func testDFSWithPrevPerformance() {
         let n = (1 << 20) - 1
-        let edges: [[Int]] = (1 ... n).map {
+        let graph: [[Int]] = (1 ... n).map {
             let left = $0 << 1
             let right = left + 1
             if right <= n {
@@ -442,14 +442,14 @@ final class DFSTests: XCTestCase {
         }
         measure {
             var count = 0
-            dfs(edges: edges, startedAt: 0) { _, _ in count += 1 }
-            XCTAssertEqual(count, edges.count)
+            dfs(graph: graph, startedAt: 0) { _, _ in count += 1 }
+            XCTAssertEqual(count, graph.count)
         }
     }
     
     func testDFSWithPrevDepthPerformance() {
         let n = (1 << 20) - 1
-        let edges: [[Int]] = (1 ... n).map {
+        let graph: [[Int]] = (1 ... n).map {
             let left = $0 << 1
             let right = left + 1
             if right <= n {
@@ -462,8 +462,8 @@ final class DFSTests: XCTestCase {
         }
         measure {
             var count = 0
-            dfs(edges: edges, startedAt: 0) { _, _, _ in count += 1 }
-            XCTAssertEqual(count, edges.count)
+            dfs(graph: graph, startedAt: 0) { _, _, _ in count += 1 }
+            XCTAssertEqual(count, graph.count)
         }
     }
 
