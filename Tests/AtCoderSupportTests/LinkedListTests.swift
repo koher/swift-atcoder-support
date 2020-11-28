@@ -5,10 +5,12 @@ final class LinkedListTests: XCTestCase {
     func testInit() {
         var a: LinkedList<Int> = .init()
         XCTAssertNil(a.next())
+        XCTAssertEqual(a.count, 0)
     }
     
     func testInitWithBidirectionalCollection() {
         var a: LinkedList<Int> = .init([2, 3, 5])
+        XCTAssertEqual(a.count, 3)
         XCTAssertEqual(a.next(), 2)
         XCTAssertEqual(a.next(), 3)
         XCTAssertEqual(a.next(), 5)
@@ -17,21 +19,48 @@ final class LinkedListTests: XCTestCase {
     
     func testInitWithArrayLiteral() {
         var a: LinkedList<Int> = [2, 3, 5]
+        XCTAssertEqual(a.count, 3)
         XCTAssertEqual(a.next(), 2)
         XCTAssertEqual(a.next(), 3)
         XCTAssertEqual(a.next(), 5)
         XCTAssertNil(a.next())
     }
     
+    func testCount() {
+        do {
+            let a: LinkedList<Int> = []
+            XCTAssertEqual(a.count, 0)
+        }
+        do {
+            let a: LinkedList<Int> = [2, 3, 5]
+            XCTAssertEqual(a.count, 3)
+        }
+    }
+    
+    func testIsEmpty() {
+        do {
+            let a: LinkedList<Int> = []
+            XCTAssertTrue(a.isEmpty)
+        }
+        do {
+            let a: LinkedList<Character> = ["A"]
+            XCTAssertFalse(a.isEmpty)
+        }
+    }
+    
     func testAppendFirst() {
         do {
             var a: LinkedList<Int> = [1, 1, 2, 3, 5, 8]
+            XCTAssertEqual(a.count, 6)
             a.appendFirst(0)
+            XCTAssertEqual(a.count, 7)
             XCTAssertEqual(a, [0, 1, 1, 2, 3, 5, 8])
         }
         do {
             var a: LinkedList<Character> = []
+            XCTAssertEqual(a.count, 0)
             a.appendFirst("A")
+            XCTAssertEqual(a.count, 1)
             XCTAssertEqual(a, ["A"])
         }
     }
@@ -39,12 +68,16 @@ final class LinkedListTests: XCTestCase {
     func testPopFirst() {
         do {
             var a: LinkedList<Int> = [0, 1, 1, 2, 3, 5, 8]
+            XCTAssertEqual(a.count, 7)
             XCTAssertEqual(a.popFirst(), 0)
+            XCTAssertEqual(a.count, 6)
             XCTAssertEqual(a, [1, 1, 2, 3, 5, 8])
         }
         do {
             var a: LinkedList<Bool> = []
+            XCTAssertEqual(a.count, 0)
             XCTAssertNil(a.popFirst())
+            XCTAssertEqual(a.count, 0)
         }
     }
     
@@ -68,11 +101,25 @@ final class LinkedListTests: XCTestCase {
     }
     
     func testNext() {
-        var a: LinkedList<Int> = .some(2, .some(3, .some(5, .none)))
+        var a: LinkedList<Int> = [2, 3, 5]
+        XCTAssertEqual(a.count, 3)
+        XCTAssertFalse(a.isEmpty)
+
         XCTAssertEqual(a.next(), 2)
+        XCTAssertEqual(a.count, 2)
+        XCTAssertFalse(a.isEmpty)
+
         XCTAssertEqual(a.next(), 3)
+        XCTAssertEqual(a.count, 1)
+        XCTAssertFalse(a.isEmpty)
+
         XCTAssertEqual(a.next(), 5)
+        XCTAssertEqual(a.count, 0)
+        XCTAssertTrue(a.isEmpty)
+
         XCTAssertNil(a.next())
+        XCTAssertEqual(a.count, 0)
+        XCTAssertTrue(a.isEmpty)
     }
     
     func testAppendFirstContentsOf() {

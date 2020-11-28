@@ -1,7 +1,10 @@
-enum LinkedList<Element>: Sequence, IteratorProtocol, ExpressibleByArrayLiteral {
-    case none
-    indirect case some(Element, LinkedList<Element>)
-    init() { self = .none }
+struct LinkedList<Element>: Sequence, IteratorProtocol, ExpressibleByArrayLiteral {
+    private var node: Node
+    private enum Node {
+        case none
+        indirect case some(Element, next: LinkedList<Element>, count: Int)
+    }
+    init() { node = .none }
     init<C>(_ collection: C) where C: BidirectionalCollection, C.Element == Element {
         self = .init()
         appendFirst(contentsOf: collection)
@@ -9,13 +12,25 @@ enum LinkedList<Element>: Sequence, IteratorProtocol, ExpressibleByArrayLiteral 
     init(arrayLiteral elements: Element...) {
         self.init(elements)
     }
+    var count: Int {
+        switch node {
+        case .none: return 0
+        case .some(_, next: _, count: let count): return count
+        }
+    }
+    var isEmpty: Bool {
+        switch node {
+        case .none: return true
+        case .some(_, next: _, count: _): return false
+        }
+    }
     mutating func appendFirst(_ element: Element) {
-        self = .some(element, self)
+        node = .some(element, next: self, count: count + 1)
     }
     mutating func popFirst() -> Element? {
-        switch self {
+        switch node {
         case .none: return nil
-        case .some(let element, let next):
+        case .some(let element, let next, _):
             self = next
             return element
         }
