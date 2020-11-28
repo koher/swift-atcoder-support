@@ -7,9 +7,9 @@ func bfs<G>(graph: G, startedAt start: G.VertexIndex, _ operation: (_ path: Link
         if isVisited[current] { continue }
         operation(path)
         isVisited[current] = true
-        for edge in graph.edges(from: current) {
+        graph.forEachEdge(from: current) { edge in
             var newPath = path
-            newPath.appendFirst(edge.destination)
+            newPath.appendFirst(graph.destination(of: edge))
             destinations.append(newPath)
         }
     }
