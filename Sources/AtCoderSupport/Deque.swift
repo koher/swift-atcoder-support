@@ -138,7 +138,7 @@ struct Deque<Element>: MutableCollection, RandomAccessCollection, ExpressibleByA
     }
 }
 extension Deque: Equatable where Element: Equatable {
-    static func == (lhs: Deque<Element>, rhs: Deque<Element>) -> Bool {
+    static func == (lhs: Self, rhs: Self) -> Bool {
         guard lhs.count == rhs.count else { return false }
         return zip(lhs, rhs).allSatisfy { $0 == $1 }
     }
