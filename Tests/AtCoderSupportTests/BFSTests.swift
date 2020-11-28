@@ -8,7 +8,7 @@ final class BFSTests: XCTestCase {
             //     |       +-> 4
             //     +-> 2 --+-> 5
             //             +-> 6
-            let edges = [
+            let graph = [
                 [1, 2],
                 [3, 4],
                 [5, 6],
@@ -20,7 +20,7 @@ final class BFSTests: XCTestCase {
             
             do {
                 var paths: [LinkedList<Int>] = []
-                bfs(edges: edges, startedAt: 0) { path in
+                bfs(graph: graph, startedAt: 0) { path in
                     paths.append(path)
                 }
                 XCTAssertEqual(paths, [
@@ -35,7 +35,7 @@ final class BFSTests: XCTestCase {
             }
             do { // Subtrees
                 var paths: [LinkedList<Int>] = []
-                bfs(edges: edges, startedAt: 2) { path in
+                bfs(graph: graph, startedAt: 2) { path in
                     paths.append(path)
                 }
                 XCTAssertEqual(paths, [
@@ -46,7 +46,7 @@ final class BFSTests: XCTestCase {
             }
             do { // Leaves
                 var paths: [LinkedList<Int>] = []
-                bfs(edges: edges, startedAt: 4) { path in
+                bfs(graph: graph, startedAt: 4) { path in
                     paths.append(path)
                 }
                 XCTAssertEqual(paths, [[4]])
@@ -58,7 +58,7 @@ final class BFSTests: XCTestCase {
             // ^^   |       +-> 4 --> 0
             // ||   +-> 2 <-+-> 5 --> 0
             // ++           +-> 6 --> 0
-            let edges = [
+            let graph = [
                 [0, 1, 2],
                 [0, 3, 4],
                 [0, 5, 6],
@@ -70,7 +70,7 @@ final class BFSTests: XCTestCase {
             
             do {
                 var paths: [LinkedList<Int>] = []
-                bfs(edges: edges, startedAt: 0) { path in
+                bfs(graph: graph, startedAt: 0) { path in
                     paths.append(path)
                 }
                 XCTAssertEqual(paths, [
@@ -85,7 +85,7 @@ final class BFSTests: XCTestCase {
             }
             do {
                 var paths: [LinkedList<Int>] = []
-                bfs(edges: edges, startedAt: 2) { path in
+                bfs(graph: graph, startedAt: 2) { path in
                     paths.append(path)
                 }
                 XCTAssertEqual(paths, [
@@ -100,7 +100,7 @@ final class BFSTests: XCTestCase {
             }
             do {
                 var paths: [LinkedList<Int>] = []
-                bfs(edges: edges, startedAt: 4) { path in
+                bfs(graph: graph, startedAt: 4) { path in
                     paths.append(path)
                 }
                 XCTAssertEqual(paths, [
@@ -119,7 +119,7 @@ final class BFSTests: XCTestCase {
     #if !DEBUG
     func testBFSPerformance() {
         let n = (1 << 20) - 1
-        let edges: [[Int]] = (1 ... n).map {
+        let graph: [[Int]] = (1 ... n).map {
             let left = $0 << 1
             let right = left + 1
             if right <= n {
@@ -132,8 +132,8 @@ final class BFSTests: XCTestCase {
         }
         measure {
             var count = 0
-            bfs(edges: edges, startedAt: 0) { _ in count += 1 }
-            XCTAssertEqual(count, edges.count)
+            bfs(graph: graph, startedAt: 0) { _ in count += 1 }
+            XCTAssertEqual(count, graph.count)
         }
     }
     #endif

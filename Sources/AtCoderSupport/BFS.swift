@@ -1,17 +1,15 @@
-// Deque のコピーも必要
-
-func bfs(edges: [[Int]], startedAt start: Int, _ operation: (_ path: LinkedList<Int>) -> Void) {
-    precondition(edges.indices.contains(start), "`start` index is out of bounds: \(start)")
-    var isVisited: [Bool] = .init(repeating: false, count: edges.count)
-    var destinations: Deque<LinkedList<Int>> = [[start]]
+// Deque, LinkedList, Graph のコピーも必要
+func bfs<G>(graph: G, startedAt start: G.VertexIndex, _ operation: (_ path: LinkedList<G.VertexIndex>) -> Void) where G: Graph {
+    var isVisited: G.VisitedVertices = graph.visitedVertices()
+    var destinations: Deque<LinkedList<G.VertexIndex>> = [[start]]
     while let path = destinations.popFirst() {
         let current = path.first!
         if isVisited[current] { continue }
         operation(path)
         isVisited[current] = true
-        for destination in edges[current] {
+        for edge in graph.edges(from: current) {
             var newPath = path
-            newPath.appendFirst(destination)
+            newPath.appendFirst(edge.destination)
             destinations.append(newPath)
         }
     }
