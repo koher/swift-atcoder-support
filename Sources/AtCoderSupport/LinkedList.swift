@@ -84,3 +84,8 @@ extension LinkedList: Equatable where Element: Equatable {
         }
     }
 }
+extension LinkedList: CustomStringConvertible where Element: CustomStringConvertible {
+    var description: String {
+        Array(self).description
+    }
+}
