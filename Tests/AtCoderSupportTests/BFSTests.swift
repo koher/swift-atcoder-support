@@ -19,25 +19,37 @@ final class BFSTests: XCTestCase {
             ]
             
             do {
-                var r: [Int] = []
-                bfs(edges: edges, startedAt: 0) { i in
-                    r.append(i)
+                var paths: [LinkedList<Int>] = []
+                bfs(edges: edges, startedAt: 0) { path in
+                    paths.append(path)
                 }
-                XCTAssertEqual(r, [0, 1, 2, 3, 4, 5, 6])
+                XCTAssertEqual(paths, [
+                    [0],
+                    [1, 0],
+                    [2, 0],
+                    [3, 1, 0],
+                    [4, 1, 0],
+                    [5, 2, 0],
+                    [6, 2, 0],
+                ])
             }
             do { // Subtrees
-                var r: [Int] = []
-                bfs(edges: edges, startedAt: 2) { i in
-                    r.append(i)
+                var paths: [LinkedList<Int>] = []
+                bfs(edges: edges, startedAt: 2) { path in
+                    paths.append(path)
                 }
-                XCTAssertEqual(r, [2, 5, 6])
+                XCTAssertEqual(paths, [
+                    [2],
+                    [5, 2],
+                    [6, 2],
+                ])
             }
             do { // Leaves
-                var r: [Int] = []
-                bfs(edges: edges, startedAt: 4) { i in
-                    r.append(i)
+                var paths: [LinkedList<Int>] = []
+                bfs(edges: edges, startedAt: 4) { path in
+                    paths.append(path)
                 }
-                XCTAssertEqual(r, [4])
+                XCTAssertEqual(paths, [[4]])
             }
         }
         
@@ -57,235 +69,49 @@ final class BFSTests: XCTestCase {
             ]
             
             do {
-                var r: [Int] = []
-                bfs(edges: edges, startedAt: 0) { i in
-                    r.append(i)
+                var paths: [LinkedList<Int>] = []
+                bfs(edges: edges, startedAt: 0) { path in
+                    paths.append(path)
                 }
-                XCTAssertEqual(r, [0, 1, 2, 3, 4, 5, 6])
+                XCTAssertEqual(paths, [
+                    [0],
+                    [1, 0],
+                    [2, 0],
+                    [3, 1, 0],
+                    [4, 1, 0],
+                    [5, 2, 0],
+                    [6, 2, 0],
+                ])
             }
             do {
-                var r: [Int] = []
-                bfs(edges: edges, startedAt: 2) { i in
-                    r.append(i)
+                var paths: [LinkedList<Int>] = []
+                bfs(edges: edges, startedAt: 2) { path in
+                    paths.append(path)
                 }
-                XCTAssertEqual(r, [2, 0, 5, 6, 1, 3, 4])
+                XCTAssertEqual(paths, [
+                    [2],
+                    [0, 2],
+                    [5, 2],
+                    [6, 2],
+                    [1, 0, 2],
+                    [3, 1, 0, 2],
+                    [4, 1, 0, 2],
+                ])
             }
             do {
-                var r: [Int] = []
-                bfs(edges: edges, startedAt: 4) { i in
-                    r.append(i)
+                var paths: [LinkedList<Int>] = []
+                bfs(edges: edges, startedAt: 4) { path in
+                    paths.append(path)
                 }
-                XCTAssertEqual(r, [4, 1, 0, 3, 2, 5, 6])
-            }
-        }
-    }
-    
-    func testBFSWithPrev() {
-        do { // Trees
-            // 0 --+-> 1 --+-> 3
-            //     |       +-> 4
-            //     +-> 2 --+-> 5
-            //             +-> 6
-            let edges = [
-                [1, 2],
-                [3, 4],
-                [5, 6],
-                [],
-                [],
-                [],
-                [],
-            ]
-            
-            do {
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                bfs(edges: edges, startedAt: 0) { current, prev in
-                    currents.append(current)
-                    prevs.append(prev)
-                }
-                XCTAssertEqual(currents, [0, 1, 2, 3, 4, 5, 6])
-                XCTAssertEqual(prevs, [nil, 0, 0, 1, 1, 2, 2])
-            }
-            do { // Subtrees
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                bfs(edges: edges, startedAt: 2) { current, prev in
-                    currents.append(current)
-                    prevs.append(prev)
-                }
-                XCTAssertEqual(currents, [2, 5, 6])
-                XCTAssertEqual(prevs, [nil, 2, 2])
-            }
-            do { // Leaves
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                bfs(edges: edges, startedAt: 4) { current, prev in
-                    currents.append(current)
-                    prevs.append(prev)
-                }
-                XCTAssertEqual(currents, [4])
-                XCTAssertEqual(prevs, [nil])
-            }
-        }
-        
-        do { // Complex Graphs
-            //  0 <-+-> 1 <-+-> 3 --> 0
-            // ^^   |       +-> 4 --> 0
-            // ||   +-> 2 <-+-> 5 --> 0
-            // ++           +-> 6 --> 0
-            let edges = [
-                [0, 1, 2],
-                [0, 3, 4],
-                [0, 5, 6],
-                [1, 0],
-                [1, 0],
-                [2, 0],
-                [2, 0],
-            ]
-            
-            do {
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                bfs(edges: edges, startedAt: 0) { current, prev in
-                    currents.append(current)
-                    prevs.append(prev)
-                }
-                XCTAssertEqual(currents, [0, 1, 2, 3, 4, 5, 6])
-                XCTAssertEqual(prevs, [nil, 0, 0, 1, 1, 2, 2])
-            }
-            do {
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                bfs(edges: edges, startedAt: 2) { current, prev in
-                    currents.append(current)
-                    prevs.append(prev)
-                }
-                XCTAssertEqual(currents, [2, 0, 5, 6, 1, 3, 4])
-                XCTAssertEqual(prevs, [nil, 2, 2, 2, 0, 1, 1])
-            }
-            do {
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                bfs(edges: edges, startedAt: 4) { current, prev in
-                    currents.append(current)
-                    prevs.append(prev)
-                }
-                XCTAssertEqual(currents, [4, 1, 0, 3, 2, 5, 6])
-                XCTAssertEqual(prevs, [nil, 4, 4, 1, 0, 2, 2])
-            }
-        }
-    }
-    
-    func testBFSWithPrevDepth() {
-        do { // Trees
-            // 0 --+-> 1 --+-> 3
-            //     |       +-> 4
-            //     +-> 2 --+-> 5
-            //             +-> 6
-            let edges = [
-                [1, 2],
-                [3, 4],
-                [5, 6],
-                [],
-                [],
-                [],
-                [],
-            ]
-            
-            do {
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                var depths: [Int] = []
-                bfs(edges: edges, startedAt: 0) { current, prev, depth in
-                    currents.append(current)
-                    prevs.append(prev)
-                    depths.append(depth)
-                }
-                XCTAssertEqual(currents, [0, 1, 2, 3, 4, 5, 6])
-                XCTAssertEqual(prevs, [nil, 0, 0, 1, 1, 2, 2])
-                XCTAssertEqual(depths, [0, 1, 1, 2, 2, 2, 2])
-            }
-            do { // Subtrees
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                var depths: [Int] = []
-                bfs(edges: edges, startedAt: 2) { current, prev, depth in
-                    currents.append(current)
-                    prevs.append(prev)
-                    depths.append(depth)
-                }
-                XCTAssertEqual(currents, [2, 5, 6])
-                XCTAssertEqual(prevs, [nil, 2, 2])
-                XCTAssertEqual(depths, [0, 1, 1])
-            }
-            do { // Leaves
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                var depths: [Int] = []
-                bfs(edges: edges, startedAt: 4) { current, prev, depth in
-                    currents.append(current)
-                    prevs.append(prev)
-                    depths.append(depth)
-                }
-                XCTAssertEqual(currents, [4])
-                XCTAssertEqual(prevs, [nil])
-                XCTAssertEqual(depths, [0])
-            }
-        }
-        
-        do { // Complex Graphs
-            //  0 <-+-> 1 <-+-> 3 --> 0
-            // ^^   |       +-> 4 --> 0
-            // ||   +-> 2 <-+-> 5 --> 0
-            // ++           +-> 6 --> 0
-            let edges = [
-                [0, 1, 2],
-                [0, 3, 4],
-                [0, 5, 6],
-                [1, 0],
-                [1, 0],
-                [2, 0],
-                [2, 0],
-            ]
-            
-            do {
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                var depths: [Int] = []
-                bfs(edges: edges, startedAt: 0) { current, prev, depth in
-                    currents.append(current)
-                    prevs.append(prev)
-                    depths.append(depth)
-                }
-                XCTAssertEqual(currents, [0, 1, 2, 3, 4, 5, 6])
-                XCTAssertEqual(prevs, [nil, 0, 0, 1, 1, 2, 2])
-                XCTAssertEqual(depths, [0, 1, 1, 2, 2, 2, 2])
-            }
-            do {
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                var depths: [Int] = []
-                bfs(edges: edges, startedAt: 2) { current, prev, depth in
-                    currents.append(current)
-                    prevs.append(prev)
-                    depths.append(depth)
-                }
-                XCTAssertEqual(currents, [2, 0, 5, 6, 1, 3, 4])
-                XCTAssertEqual(prevs, [nil, 2, 2, 2, 0, 1, 1])
-                XCTAssertEqual(depths, [0, 1, 1, 1, 2, 3, 3])
-            }
-            do {
-                var currents: [Int] = []
-                var prevs: [Int?] = []
-                var depths: [Int] = []
-                bfs(edges: edges, startedAt: 4) { current, prev, depth in
-                    currents.append(current)
-                    prevs.append(prev)
-                    depths.append(depth)
-                }
-                XCTAssertEqual(currents, [4, 1, 0, 3, 2, 5, 6])
-                XCTAssertEqual(prevs, [nil, 4, 4, 1, 0, 2, 2])
-                XCTAssertEqual(depths, [0, 1, 1, 2, 2, 3, 3])
+                XCTAssertEqual(paths, [
+                    [4],
+                    [1, 4],
+                    [0, 4],
+                    [3, 1, 4],
+                    [2, 0, 4],
+                    [5, 2, 0, 4],
+                    [6, 2, 0, 4],
+                ])
             }
         }
     }
@@ -307,46 +133,6 @@ final class BFSTests: XCTestCase {
         measure {
             var count = 0
             bfs(edges: edges, startedAt: 0) { _ in count += 1 }
-            XCTAssertEqual(count, edges.count)
-        }
-    }
-    
-    func testBFSWithPrevPerformance() {
-        let n = (1 << 20) - 1
-        let edges: [[Int]] = (1 ... n).map {
-            let left = $0 << 1
-            let right = left + 1
-            if right <= n {
-                return [left - 1, right - 1]
-            } else if left <= n {
-                return [left - 1]
-            } else {
-                return []
-            }
-        }
-        measure {
-            var count = 0
-            bfs(edges: edges, startedAt: 0) { _, _ in count += 1 }
-            XCTAssertEqual(count, edges.count)
-        }
-    }
-    
-    func testBFSWithPrevDepthPerformance() {
-        let n = (1 << 20) - 1
-        let edges: [[Int]] = (1 ... n).map {
-            let left = $0 << 1
-            let right = left + 1
-            if right <= n {
-                return [left - 1, right - 1]
-            } else if left <= n {
-                return [left - 1]
-            } else {
-                return []
-            }
-        }
-        measure {
-            var count = 0
-            bfs(edges: edges, startedAt: 0) { _, _, _ in count += 1 }
             XCTAssertEqual(count, edges.count)
         }
     }
