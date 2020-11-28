@@ -39,3 +39,21 @@ func dfs(edges: [[Int]], startedAt start: Int, _ body: (_ current: Int, _ prev: 
         }
     }
 }
+
+// LinkedList のコピーも必要
+func dfs(graph: [[Int]], startedAt start: Int, _ body: (_ path: LinkedList<Int>) -> Void) {
+    precondition(graph.indices.contains(start), "`start` index is out of bounds: \(start)")
+    var isVisited: [Bool] = .init(repeating: false, count: graph.count)
+    var paths: [LinkedList<Int>] = [[start]]
+    while let path = paths.popLast() {
+        let current = path.first!
+        if isVisited[current] { continue }
+        body(path)
+        isVisited[current] = true
+        for destination in graph[current].reversed() {
+            var nextPath = path
+            nextPath.appendFirst(destination)
+            paths.append(nextPath)
+        }
+    }
+}
