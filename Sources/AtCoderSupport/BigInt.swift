@@ -11,6 +11,9 @@ struct BigInt: AdditiveArithmetic, ExpressibleByIntegerLiteral, CustomStringConv
         guard let decimal = Decimal(string: string, locale: Locale(identifier: "en")) else { return nil }
         self.init(decimal)
     }
+    init?<S>(_ string: S) where S: StringProtocol {
+        self.init(String(string))
+    }
     init(integerLiteral value: Int) {
         self.init(value)
     }

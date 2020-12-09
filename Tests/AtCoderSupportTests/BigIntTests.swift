@@ -21,6 +21,25 @@ final class BigIntTests: XCTestCase {
         }
     }
     
+    func testInitWithStringProtocol() {
+        do {
+            let a: BigInt? = BigInt("X1267650600228229401496703205376".dropFirst())
+            XCTAssertEqual(a, .pow(2, 100))
+        }
+        do {
+            let a: BigInt? = BigInt("X-1267650600228229401496703205376".dropFirst())
+            XCTAssertEqual(a, -.pow(2, 100))
+        }
+        do {
+            let a: BigInt? = BigInt("X0".dropFirst())
+            XCTAssertEqual(a, 0)
+        }
+        do {
+            let a: BigInt? = BigInt("XABC".dropFirst())
+            XCTAssertNil(a)
+        }
+    }
+    
     func testDescription() {
         do {
             let a: BigInt = 42
