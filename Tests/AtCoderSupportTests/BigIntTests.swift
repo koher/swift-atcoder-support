@@ -123,6 +123,11 @@ final class BigIntTests: XCTestCase {
             let b: BigInt = 3
             XCTAssertEqual(a % b, -2)
         }
+        do {
+            let a: BigInt = BigInt("1858445835049782285757026664950217712384527500000000")!
+            let b: BigInt = 998244353
+            XCTAssertEqual(a % b, 951633476)
+        }
     }
     
     func testPow() {
@@ -132,6 +137,19 @@ final class BigIntTests: XCTestCase {
             let r: BigInt = .pow(a, b)
             XCTAssertEqual(r, (1 ... 100).reduce(1 as BigInt) { r, _ in r * 2 })
             XCTAssertEqual(r.description, "1267650600228229401496703205376")
+        }
+        do {
+            let a: BigInt = 2
+            let b: Int = 100
+            let r: BigInt = .pow(a, b)
+            XCTAssertEqual(r, (1 ... 100).reduce(1 as BigInt) { r, _ in r * 2 })
+            XCTAssertEqual(r.description, "1267650600228229401496703205376")
+        }
+        do {
+            let a: BigInt = 2
+            let b: Int = 512
+            let r: BigInt = .pow(a, b)
+            XCTAssertEqual(r.description, "13​407​807​929​942​597​099​574​024​998​205​846​127​479​365​820​592​393​377​723​561​443​721​764​030​073​546​976​801​874​298​166​903​427​690​031​858​186​486​050​853​753​882​811​946​569​946​433​649​006​084​096")
         }
     }
 }
