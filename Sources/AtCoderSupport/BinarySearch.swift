@@ -28,3 +28,33 @@ extension RandomAccessCollection where Element: Comparable, Index == Int {
         }
     }
 }
+
+extension RandomAccessCollection where Index == Int {
+    func values(_ op: (Int, Int) -> Bool, _ predicate: (Element) throws -> Bool) rethrows -> SubSequence {
+        let isLess = op(1, 2)
+        
+        var low = startIndex - 1
+        var high = endIndex
+        if isLess {
+            while high - low > 1 {
+                let mid = low + (high - low) / 2
+                if try predicate(self[mid]) {
+                    low = mid
+                } else {
+                    high = mid
+                }
+            }
+            return self[..<high]
+        } else {
+            while high - low > 1 {
+                let mid = low + (high - low) / 2
+                if try predicate(self[mid]) {
+                    high = mid
+                } else {
+                    low = mid
+                }
+            }
+            return self[high...]
+        }
+    }
+}
