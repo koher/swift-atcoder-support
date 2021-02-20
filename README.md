@@ -26,6 +26,8 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | mod | `ModInt` | [ARC 107 A - Simple Math](https://atcoder.jp/contests/arc107/submissions/17766344) |
 | mod | `%+`, `%*`, `%+=` 等 | [ABC 151 E - Max-Min Sums](https://atcoder.jp/contests/abc151/submissions/17937622) |
 | 範囲の和 | `ClosedRange.sum(modulus:)` | [ARC 107 A - Simple Math](https://atcoder.jp/contests/arc107/submissions/17766344) |
+| 安全な範囲演算子 | `..<?`, `...?` | [ABC 192 D - Base n](https://atcoder.jp/contests/abc192/submissions/20355912) |
+| オーバーフロー安全な算術演算子 | `+?`, `-?`, `*?` | [ABC 192 D - Base n](https://atcoder.jp/contests/abc192/submissions/20355912) |
 
 ## テスト
 
