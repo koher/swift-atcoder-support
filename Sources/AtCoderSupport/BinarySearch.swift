@@ -6,10 +6,10 @@ extension RandomAccessCollection where Element: Comparable, Index == Int {
         var high = endIndex
         while high - low > 1 {
             let mid = low + (high - low) / 2
-            if self[mid] >= value {
-                high = mid
-            } else {
+            if self[mid] < value {
                 low = mid
+            } else {
+                high = mid
             }
         }
         return self[..<high]
@@ -24,10 +24,10 @@ extension RandomAccessCollection where Element: Comparable, Index == Int {
         var high = endIndex
         while high - low > 1 {
             let mid = low + (high - low) / 2
-            if self[mid] > value {
-                high = mid
-            } else {
+            if self[mid] <= value {
                 low = mid
+            } else {
+                high = mid
             }
         }
         return self[..<high]
