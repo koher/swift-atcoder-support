@@ -54,7 +54,57 @@ final class BinarySearchTests: XCTestCase {
                 XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
             }
         }
-        
+        do { // predicate
+            let a = [0, 1, 1, 2, 3, 5, 8]
+            do {
+                let r = a.values(<) { $0 < -1 }
+                XCTAssertEqual(r, [])
+            }
+            do {
+                let r = a.values(<) { $0 < 0 }
+                XCTAssertEqual(r, [])
+            }
+            do {
+                let r = a.values(<) { $0 < 1 }
+                XCTAssertEqual(r, [0])
+            }
+            do {
+                let r = a.values(<) { $0 < 2 }
+                XCTAssertEqual(r, [0, 1, 1])
+            }
+            do {
+                let r = a.values(<) { $0 < 3 }
+                XCTAssertEqual(r, [0, 1, 1, 2])
+            }
+            do {
+                let r = a.values(<) { $0 < 4 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3])
+            }
+            do {
+                let r = a.values(<) { $0 < 5 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3])
+            }
+            do {
+                let r = a.values(<) { $0 < 6 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5])
+            }
+            do {
+                let r = a.values(<) { $0 < 7 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5])
+            }
+            do {
+                let r = a.values(<) { $0 < 8 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5])
+            }
+            do {
+                let r = a.values(<) { $0 < 9 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(<) { $0 < 10 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+        }
         do { // Collections but `Array`s
             let a: ArraySlice<Int> = [0, 1, 1, 2, 3, 5, 8, 13][1 ..< 7]
             do {
@@ -166,6 +216,61 @@ final class BinarySearchTests: XCTestCase {
             }
             do {
                 let r = a.values(<=, 10)
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+        }
+        do { // predict
+            let a = [0, 1, 1, 2, 3, 5, 8]
+            do {
+                let r = a.values(<=) { $0 <= -2 }
+                XCTAssertEqual(r, [])
+            }
+            do {
+                let r = a.values(<=) { $0 <= -1 }
+                XCTAssertEqual(r, [])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 0 }
+                XCTAssertEqual(r, [0])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 1 }
+                XCTAssertEqual(r, [0, 1, 1])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 2 }
+                XCTAssertEqual(r, [0, 1, 1, 2])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 3 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 4 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 5 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 6 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 7 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 8 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 9 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(<=) { $0 <= 10 }
                 XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
             }
         }
@@ -283,7 +388,57 @@ final class BinarySearchTests: XCTestCase {
                 XCTAssertEqual(r, [])
             }
         }
-        
+        do { // predict
+            let a = [0, 1, 1, 2, 3, 5, 8]
+            do {
+                let r = a.values(>) { $0 > -2 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>) { $0 > -1 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>) { $0 > 0 }
+                XCTAssertEqual(r, [1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>) { $0 > 1 }
+                XCTAssertEqual(r, [2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>) { $0 > 2 }
+                XCTAssertEqual(r, [3, 5, 8])
+            }
+            do {
+                let r = a.values(>) { $0 > 3 }
+                XCTAssertEqual(r, [5, 8])
+            }
+            do {
+                let r = a.values(>) { $0 > 4 }
+                XCTAssertEqual(r, [5, 8])
+            }
+            do {
+                let r = a.values(>) { $0 > 5 }
+                XCTAssertEqual(r, [8])
+            }
+            do {
+                let r = a.values(>) { $0 > 6 }
+                XCTAssertEqual(r, [8])
+            }
+            do {
+                let r = a.values(>) { $0 > 7 }
+                XCTAssertEqual(r, [8])
+            }
+            do {
+                let r = a.values(>) { $0 > 8 }
+                XCTAssertEqual(r, [])
+            }
+            do {
+                let r = a.values(>) { $0 > 9 }
+                XCTAssertEqual(r, [])
+            }
+        }
         do { // Collections but `Array`s
             let a: ArraySlice<Int> = [0, 1, 1, 2, 3, 5, 8, 13][1 ..< 7]
             do {
@@ -391,6 +546,61 @@ final class BinarySearchTests: XCTestCase {
             }
             do {
                 let r = a.values(>=, 10)
+                XCTAssertEqual(r, [])
+            }
+        }
+        do { // predict
+            let a = [0, 1, 1, 2, 3, 5, 8]
+            do {
+                let r = a.values(>=) { $0 >= -2 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= -1 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 0 }
+                XCTAssertEqual(r, [0, 1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 1 }
+                XCTAssertEqual(r, [1, 1, 2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 2 }
+                XCTAssertEqual(r, [2, 3, 5, 8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 3 }
+                XCTAssertEqual(r, [3, 5, 8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 4 }
+                XCTAssertEqual(r, [5, 8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 5 }
+                XCTAssertEqual(r, [5, 8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 6 }
+                XCTAssertEqual(r, [8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 7 }
+                XCTAssertEqual(r, [8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 8 }
+                XCTAssertEqual(r, [8])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 9 }
+                XCTAssertEqual(r, [])
+            }
+            do {
+                let r = a.values(>=) { $0 >= 10 }
                 XCTAssertEqual(r, [])
             }
         }
