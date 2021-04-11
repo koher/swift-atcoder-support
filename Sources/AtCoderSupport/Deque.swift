@@ -30,9 +30,9 @@ struct Deque<Element>: MutableCollection, RandomAccessCollection, ExpressibleByA
         return buffer.popLast()
     }
     @discardableResult mutating func removeLast() -> Element { popLast()! }
-    mutating func appendFirst(_ element: Element) {
+    mutating func prepend(_ element: Element) {
         copyIfNeed()
-        buffer.appendFirst(element)
+        buffer.prepend(element)
     }
     mutating func popFirst() -> Element? {
         copyIfNeed()
@@ -105,7 +105,7 @@ struct Deque<Element>: MutableCollection, RandomAccessCollection, ExpressibleByA
             pointer.deinitialize(count: 1)
             return value
         }
-        func appendFirst(_ element: Element) {
+        func prepend(_ element: Element) {
             if count == capacity { doubleCapacity() }
             start = (start - 1 + capacity) % capacity
             buffer.advanced(by: start).initialize(to: element)
