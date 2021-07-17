@@ -17,6 +17,7 @@ Swift Package 形式になっていますが、 AtCoder で利用する際には
 | nCr | `NCR` | [ABC 151 E - Max-Min Sums](https://atcoder.jp/contests/abc151/submissions/17937622) |
 | 二分探索 | `values(_:_:)` | [ABC 077 C - Snuke Festival](https://atcoder.jp/contests/abc077/submissions/17547635) |
 | 深さ優先探索 | `dfs(edges:startedAt:_:)` | [ABC 138 D - Ki](https://atcoder.jp/contests/abc138/submissions/17661705) |
+| 幅優先探索 | `bfs(edges:startedAt:,_:)` | [ABC 190 E - Magical Ornament](https://atcoder.jp/contests/abc190/submissions/24337525) |
 | 素数判定 | `isPrime` | [ABC 149 C - Next Prime](https://atcoder.jp/contests/abc149/submissions/17548101) |
 | ベルマン–フォード法 | `bellmanFord(graph:startedAt)` | [ABC 061 D - Score Attack](https://atcoder.jp/contests/abc061/submissions/18111027) |
 | ダイクストラ法 | `dijkstra(graph:startedAt:)` | [ABC 035 D - トレジャーハント](https://atcoder.jp/contests/abc035/submissions/17662367) |
