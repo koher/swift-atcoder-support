@@ -1,64 +1,25 @@
-func readInt1(line: Int = #line, file: String = #file) -> Int {
-    guard let string = readLine() else {
-        preconditionFailure("No input (at line \(line) in \(file))")
-    }
-    guard let value = Int(string) else {
-        preconditionFailure("Illegal input value: \(string) (at line \(line) in \(file))")
-    }
-    return value
+func readInt1() -> Int {
+    Int(readLine()!)!
 }
 
-func readInt2(line: Int = #line, file: String = #file) -> (Int, Int) {
-    guard let string = readLine() else {
-        preconditionFailure("No input (at line \(line) in \(file))")
-    }
-    let values: [Int] = string.split(separator: " ").map { part in
-        guard let value = Int(part) else {
-            preconditionFailure("Illegal input value: \(string) (at line \(line) in \(file))")
-        }
-        return value
-    }
-    precondition(values.count == 2, "Illegal number of input values: count = \(values.count), values = \(values) (at line \(line) in \(file))")
+func readInt2() -> (Int, Int) {
+    let values = readLine()!.split(separator: " ").map { Int(String($0))! }
+    precondition(values.count == 2)
     return (values[0], values[1])
 }
 
 func readInt3(line: Int = #line, file: String = #file) -> (Int, Int, Int) {
-    guard let string = readLine() else {
-        preconditionFailure("No input (at line \(line) in \(file))")
-    }
-    let values: [Int] = string.split(separator: " ").map { part in
-        guard let value = Int(part) else {
-            preconditionFailure("Illegal input value: \(string) (at line \(line) in \(file))")
-        }
-        return value
-    }
-    precondition(values.count == 3, "Illegal number of input values: count = \(values.count), values = \(values) (at line \(line) in \(file))")
+    let values = readLine()!.split(separator: " ").map { Int(String($0))! }
+    precondition(values.count == 3)
     return (values[0], values[1], values[2])
 }
 
 func readInt4(line: Int = #line, file: String = #file) -> (Int, Int, Int, Int) {
-    guard let string = readLine() else {
-        preconditionFailure("No input (at line \(line) in \(file))")
-    }
-    let values: [Int] = string.split(separator: " ").map { part in
-        guard let value = Int(part) else {
-            preconditionFailure("Illegal input value: \(string) (at line \(line) in \(file))")
-        }
-        return value
-    }
-    precondition(values.count == 4, "Illegal number of input values: count = \(values.count), values = \(values) (at line \(line) in \(file))")
+    let values = readLine()!.split(separator: " ").map { Int(String($0))! }
+    precondition(values.count == 4)
     return (values[0], values[1], values[2], values[3])
 }
 
 func readIntN(line: Int = #line, file: String = #file) -> [Int] {
-    guard let string = readLine() else {
-        preconditionFailure("No input (at line \(line) in \(file))")
-    }
-    let values: [Int] = string.split(separator: " ").map { part in
-        guard let value = Int(part) else {
-            preconditionFailure("Illegal input value: \(string) (at line \(line) in \(file))")
-        }
-        return value
-    }
-    return values
+    readLine()!.split(separator: " ").map { Int(String($0))! }
 }
