@@ -7,8 +7,9 @@ final class UnionFindTests: XCTestCase {
             let n = 10
             var unionFind: UnionFind = .init(count: n)
             
-            for i in 0 ..< n { // root
-                XCTAssertEqual(unionFind.root(of: i), i)
+            for i in 0 ..< n {
+                XCTAssertEqual(unionFind.root(of: i), i) // root
+                XCTAssertEqual(unionFind.count(of: i), 1) // count
             }
             for i in 0 ..< n { // areSame
                 for j in 0 ..< n {
@@ -22,11 +23,14 @@ final class UnionFindTests: XCTestCase {
 
             unionFind.unite(2, 3)
             XCTAssertEqual(unionFind.root(of: 2), unionFind.root(of: 3))
+            XCTAssertEqual(unionFind.count(of: 2), 2)
+            XCTAssertEqual(unionFind.count(of: 3), 2)
             do {
                 let groups: [Set<Int>] = [[0], [1], [4], [5], [6], [7], [8], [9], [2, 3]]
-                for i in 0 ..< n { // root
+                for i in 0 ..< n {
                     if groups.first(where: { $0.contains(i) })!.count > 1 { continue }
-                    XCTAssertEqual(unionFind.root(of: i), i)
+                    XCTAssertEqual(unionFind.root(of: i), i) // root
+                    XCTAssertEqual(unionFind.count(of: i), 1) // count
                 }
                 for i in 0 ..< n { // areSame
                     for j in 0 ..< n {
@@ -41,12 +45,17 @@ final class UnionFindTests: XCTestCase {
             
             unionFind.unite(5, 7)
             XCTAssertEqual(unionFind.root(of: 5), unionFind.root(of: 7))
+            XCTAssertEqual(unionFind.count(of: 5), 2)
+            XCTAssertEqual(unionFind.count(of: 7), 2)
             XCTAssertEqual(unionFind.root(of: 2), unionFind.root(of: 3))
+            XCTAssertEqual(unionFind.count(of: 2), 2)
+            XCTAssertEqual(unionFind.count(of: 3), 2)
             do {
                 let groups: [Set<Int>] = [[0], [1], [4], [6], [8], [9], [2, 3], [5, 7]]
-                for i in 0 ..< n { // root
+                for i in 0 ..< n {
                     if groups.first(where: { $0.contains(i) })!.count > 1 { continue }
-                    XCTAssertEqual(unionFind.root(of: i), i)
+                    XCTAssertEqual(unionFind.root(of: i), i) // root
+                    XCTAssertEqual(unionFind.count(of: i), 1) // count
                 }
                 for i in 0 ..< n { // areSame
                     for j in 0 ..< n {
@@ -63,12 +72,18 @@ final class UnionFindTests: XCTestCase {
             XCTAssertEqual(unionFind.root(of: 1), unionFind.root(of: 2))
             XCTAssertEqual(unionFind.root(of: 1), unionFind.root(of: 3))
             XCTAssertEqual(unionFind.root(of: 2), unionFind.root(of: 3))
+            XCTAssertEqual(unionFind.count(of: 1), 3)
+            XCTAssertEqual(unionFind.count(of: 2), 3)
+            XCTAssertEqual(unionFind.count(of: 3), 3)
             XCTAssertEqual(unionFind.root(of: 5), unionFind.root(of: 7))
+            XCTAssertEqual(unionFind.count(of: 5), 2)
+            XCTAssertEqual(unionFind.count(of: 7), 2)
             do {
                 let groups: [Set<Int>] = [[0], [4], [6], [8], [9], [1, 2, 3], [5, 7]]
-                for i in 0 ..< n { // root
+                for i in 0 ..< n {
                     if groups.first(where: { $0.contains(i) })!.count > 1 { continue }
-                    XCTAssertEqual(unionFind.root(of: i), i)
+                    XCTAssertEqual(unionFind.root(of: i), i) // root
+                    XCTAssertEqual(unionFind.count(of: i), 1) // count
                 }
                 for i in 0 ..< n { // areSame
                     for j in 0 ..< n {
@@ -102,11 +117,17 @@ final class UnionFindTests: XCTestCase {
             XCTAssertEqual(unionFind.root(of: 7), unionFind.root(of: 2))
             XCTAssertEqual(unionFind.root(of: 7), unionFind.root(of: 3))
             XCTAssertEqual(unionFind.root(of: 7), unionFind.root(of: 5))
+            XCTAssertEqual(unionFind.count(of: 1), 5)
+            XCTAssertEqual(unionFind.count(of: 2), 5)
+            XCTAssertEqual(unionFind.count(of: 3), 5)
+            XCTAssertEqual(unionFind.count(of: 5), 5)
+            XCTAssertEqual(unionFind.count(of: 7), 5)
             do {
                 let groups: [Set<Int>] = [[0], [4], [6], [8], [9], [1, 2, 3, 5, 7]]
-                for i in 0 ..< n { // root
+                for i in 0 ..< n {
                     if groups.first(where: { $0.contains(i) })!.count > 1 { continue }
-                    XCTAssertEqual(unionFind.root(of: i), i)
+                    XCTAssertEqual(unionFind.root(of: i), i) // root
+                    XCTAssertEqual(unionFind.count(of: i), 1) // count
                 }
                 for i in 0 ..< n { // areSame
                     for j in 0 ..< n {
