@@ -140,4 +140,68 @@ final class Array2DTests: XCTestCase {
             XCTAssertEqual(a[3, 0], -1)
         }
     }
+
+    func testNeighbourCoord() {
+        let target = [
+            "0*0", "0*1", "0*2", "0*3",
+            "1*0", "1*1", "1*2", "1*3",
+            "2*0", "2*1", "2*2", "2*3",
+            "3*0", "3*1", "3*2", "3*3",
+            "4*0", "4*1", "4*2", "4*3"
+        ]
+        let a: Array2D<String> = .init(width: 4, height: 5, elements: target)
+        do {
+            let neighbourList = a.neighboursCoord4(around: (1, 1))
+            let expectedList = [(1, 2), (0, 1), (1, 0), (2, 1)]
+            for (i, (r, c)) in neighbourList.enumerated() {
+                XCTAssertEqual(r, expectedList[i].0)
+                XCTAssertEqual(c, expectedList[i].1)
+            }
+        }
+        do {
+            let neighbourList = a.neighboursCoord4(around: (0, 1))
+            let expectedList = [(0, 2), (0, 0), (1, 1)]
+            for (i, (r, c)) in neighbourList.enumerated() {
+                XCTAssertEqual(r, expectedList[i].0)
+                XCTAssertEqual(c, expectedList[i].1)
+            }
+        }
+        do {
+            let neighbourList = a.neighboursCoord4(around: (0, 0))
+            let expectedList = [(0, 1), (1, 0)]
+            for (i, (r, c)) in neighbourList.enumerated() {
+                XCTAssertEqual(r, expectedList[i].0)
+                XCTAssertEqual(c, expectedList[i].1)
+            }
+        }
+        do {
+            let neighbourList = a.neighboursCoord4(around: (0, 0), ignoreOutside: false)
+            let expectedList = [(0, 1), (-1, 0), (0, -1), (1, 0)]
+            for (i, (r, c)) in neighbourList.enumerated() {
+                XCTAssertEqual(r, expectedList[i].0)
+                XCTAssertEqual(c, expectedList[i].1)
+            }
+        }
+    }
+
+    func testSeekWords() {
+        let strs = [
+            "asdfghjk",
+            "zxcvbnez",
+            "qwerykio",
+            "asdfuyui",
+            "qwenhjkl",
+            "qwscvbfu",
+            "nbvcytfr"
+        ]
+        let a: Array2D<Character> = .init(width: strs[0].count, height: strs.count, stringArray: strs)
+
+        XCTAssertEqual(a[(5, 2)], "s")
+        XCTAssertEqual(a[(4, 3)], "n")
+        XCTAssertEqual(a[(3, 4)], "u")
+        XCTAssertEqual(a[(2, 5)], "k")
+        XCTAssertEqual(a[(1, 6)], "e")
+
+
+    }
 }

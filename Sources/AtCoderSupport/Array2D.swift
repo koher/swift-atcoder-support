@@ -50,6 +50,38 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     func map<T>(_ transform: (Element) throws -> T) rethrows -> Array2D<T> {
         try Array2D<T>(width: width, height: height, elements: elements.map(transform))
     }
+    func neighboursCoord4(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
+        let dr = [0, -1, 0, 1]
+        let dc = [1, 0, -1, 0]
+        var res = [Coord]()
+        for i in 0..<4 {
+            let nr = now.row + dr[i]
+            let nc = now.col + dc[i]
+            if ignoreOutside {
+                if indexAt(r: nr, c: nc) == nil {
+                    continue
+                }
+            }
+            res.append((nr, nc))
+        }
+        return res
+    }
+    func neighboursCoord8(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
+        let dr = [0, -1, -1, -1, 0, 1, 1, 1]
+        let dc = [1, 1, 0, -1, -1, -1, 0, 1]
+        var res = [Coord]()
+        for i in 0..<8 {
+            let nr = now.row + dr[i]
+            let nc = now.col + dc[i]
+            if ignoreOutside {
+                if indexAt(r: nr, c: nc) == nil {
+                    continue
+                }
+            }
+            res.append((nr, nc))
+        }
+        return res
+    }
     var description: String {
         var result: String = ""
         for r in rowRange {
