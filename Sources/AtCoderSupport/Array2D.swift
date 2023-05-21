@@ -1,4 +1,5 @@
 struct Array2D<Element>: Sequence, CustomStringConvertible {
+    typealias Coord = (row: Int, col: Int)
     let width: Int
     let height: Int
     private(set) var elements: [Element]
@@ -39,7 +40,7 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
             elements[i] = newValue
         }
     }
-    subscript(position: (Int, Int)) -> Element {
+    subscript(position: Coord) -> Element {
         get { self[position.0, position.1] }
         set { self[position.0, position.1] = newValue }
     }
