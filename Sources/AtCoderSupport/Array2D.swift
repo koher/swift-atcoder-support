@@ -14,20 +14,20 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         self.init(width: width, height: height, elements: [Element](repeating: element, count: width * height), outside: outside)
     }
     var count: Int { elements.count }
-    var xRange: Range<Int> { 0 ..< width }
-    var yRange: Range<Int> { 0 ..< height }
-    private func indexAt(x: Int, y: Int) -> Int? {
-        guard xRange.contains(x) else { return nil }
-        guard yRange.contains(y) else { return nil }
-        return y * width + x
+    var rowRange: Range<Int> { 0 ..< height }
+    var colRange: Range<Int> { 0 ..< width }
+    private func indexAt(r: Int, c: Int) -> Int? {
+        guard rowRange.contains(r) else { return nil }
+        guard colRange.contains(c) else { return nil }
+        return r * width + c
     }
-    subscript(x: Int, y: Int) -> Element {
+    subscript(r: Int, c: Int) -> Element {
         get {
-            guard let i = indexAt(x: x, y: y) else { return outside! }
+            guard let i = indexAt(r: r, c: c) else { return outside! }
             return elements[i]
         }
         set {
-            guard let i = indexAt(x: x, y: y) else {
+            guard let i = indexAt(r: r, c: c) else {
                 precondition(outside != nil)
                 return
             }
@@ -46,12 +46,12 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     }
     var description: String {
         var result: String = ""
-        for y in yRange {
-            for x in xRange {
-                if x > 0 {
+        for r in rowRange {
+            for c in colRange {
+                if c > 0 {
                     result.append(" ")
                 }
-                result.append("\(self[x, y])")
+                result.append("\(self[r, c])")
             }
             result.append("\n")
         }
@@ -61,12 +61,12 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
 extension Array2D where Element: CustomStringConvertible {
     var description: String {
         var result: String = ""
-        for y in yRange {
-            for x in xRange {
-                if x > 0 {
+        for r in rowRange {
+            for c in colRange {
+                if c > 0 {
                     result.append(" ")
                 }
-                result.append(self[x, y].description)
+                result.append(self[r, c].description)
             }
             result.append("\n")
         }
