@@ -23,7 +23,12 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     }
     subscript(r: Int, c: Int) -> Element {
         get {
-            guard let i = indexAt(r: r, c: c) else { return outside! }
+            guard let i = indexAt(r: r, c: c) else {
+                guard let os = outside else {
+                    fatalError("(r, c)=(\(r),\(c)) is outside and the outside value of Array2D is not defined.")
+                }
+                return os
+            }
             return elements[i]
         }
         set {
