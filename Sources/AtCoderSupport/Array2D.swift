@@ -1,5 +1,8 @@
 struct Array2D<Element>: Sequence, CustomStringConvertible {
     typealias Coord = (row: Int, col: Int)
+    let quadDirectionUnitVec = [(0, 1), (-1, 0), (0, -1), (1, 0)]
+    let octaDirectionUnitVec = [(0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1)]
+
     let width: Int
     let height: Int
     private(set) var elements: [Element]
@@ -17,6 +20,8 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     var count: Int { elements.count }
     var rowRange: Range<Int> { 0 ..< height }
     var colRange: Range<Int> { 0 ..< width }
+    private func boardContains(coord: Coord) -> Bool { rowRange.contains(coord.row) && colRange.contains(coord.col) }
+    private func boardNotContains(coord: Coord) -> Bool { !boardContains(coord: coord) }
     private func indexAt(r: Int, c: Int) -> Int? {
         guard rowRange.contains(r) else { return nil }
         guard colRange.contains(c) else { return nil }
@@ -51,28 +56,22 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         try Array2D<T>(width: width, height: height, elements: elements.map(transform))
     }
     func neighboursCoord4(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
-        let dr = [0, -1, 0, 1]
-        let dc = [1, 0, -1, 0]
         var res = [Coord]()
         for i in 0..<4 {
-            let nr = now.row + dr[i]
-            let nc = now.col + dc[i]
-            if ignoreOutside {
-                if indexAt(r: nr, c: nc) == nil {
-                    continue
-                }
+            let nr = now.row + quadDirectionUnitVec[i].0
+            let nc = now.col + quadDirectionUnitVec[i].1
+            if ignoreOutside && boardNotContains(coord: (row: nr, col: nc)) {
+                continue
             }
             res.append((nr, nc))
         }
         return res
     }
     func neighboursCoord8(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
-        let dr = [0, -1, -1, -1, 0, 1, 1, 1]
-        let dc = [1, 1, 0, -1, -1, -1, 0, 1]
         var res = [Coord]()
         for i in 0..<8 {
-            let nr = now.row + dr[i]
-            let nc = now.col + dc[i]
+            let nr = now.row + octaDirectionUnitVec[i].0
+            let nc = now.col + octaDirectionUnitVec[i].1
             if ignoreOutside {
                 if indexAt(r: nr, c: nc) == nil {
                     continue
