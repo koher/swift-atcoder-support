@@ -115,4 +115,25 @@ extension Array2D where Element == Character {
         let array = stringArray.map { s in Array(s) }.flatMap { $0 }
         self.init(width: width, height: height, elements: array, outside: outside)
     }
+    func seek(word: String) -> [Coord]? {
+        let wcs = Array(word)
+        for row in 0..<height {
+            for col in 0..<width {
+                for (ir, ic) in octaDirectionUnitVec {
+                    var buf = ""
+                    var loc = [Coord]()
+                    for scale in 0..<wcs.count {
+                        let destination = (row + scale * ir, col + scale * ic)
+                        guard boardContains(coord: destination) else { break }
+                        buf.append(self[destination])
+                        loc.append(destination)
+                    }
+                    if buf == word {
+                        return loc
+                    }
+                }
+            }
+        }
+        return nil
+    }
 }

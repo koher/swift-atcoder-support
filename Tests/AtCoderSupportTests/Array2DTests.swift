@@ -195,13 +195,12 @@ final class Array2DTests: XCTestCase {
             "nbvcytfr"
         ]
         let a: Array2D<Character> = .init(width: strs[0].count, height: strs.count, stringArray: strs)
-
-        XCTAssertEqual(a[(5, 2)], "s")
-        XCTAssertEqual(a[(4, 3)], "n")
-        XCTAssertEqual(a[(3, 4)], "u")
-        XCTAssertEqual(a[(2, 5)], "k")
-        XCTAssertEqual(a[(1, 6)], "e")
-
-
+        let result = a.seek(word: "snuke")
+        XCTAssertNotNil(result)
+        let expected = [(5, 2), (4, 3), (3, 4), (2, 5), (1, 6)]
+        for (i, (r, c)) in result!.enumerated() {
+            XCTAssertEqual(r, expected[i].0)
+            XCTAssertEqual(c, expected[i].1)
+        }
     }
 }
