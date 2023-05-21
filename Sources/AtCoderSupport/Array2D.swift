@@ -79,3 +79,9 @@ extension Array2D where Element: CustomStringConvertible {
         return result
     }
 }
+extension Array2D where Element == Character {
+    init(width: Int, height: Int, stringArray: [String], outside: Element? = nil) {
+        let array = stringArray.map { s in Array(s) }.flatMap { $0 }
+        self.init(width: width, height: height, elements: array, outside: outside)
+    }
+}
