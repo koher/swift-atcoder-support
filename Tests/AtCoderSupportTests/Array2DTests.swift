@@ -4,7 +4,7 @@ import XCTest
 final class Array2DTests: XCTestCase {
     func testInit() {
         do {
-            let a: Array2D<Int> = .init(width: 3, height: 2, element: 42)
+            let a: Array2D<Int> = .init(height: 2, width: 3, element: 42)
             
             XCTAssertEqual(a[0, 0], 42)
             XCTAssertEqual(a[0, 1], 42)
@@ -18,7 +18,7 @@ final class Array2DTests: XCTestCase {
     
     func testCount() {
         do {
-            let a: Array2D<Int> = .init(width: 4, height: 3, element: 42)
+            let a: Array2D<Int> = .init(height: 3, width: 4, element: 42)
             let r = a.count
             XCTAssertEqual(r, 12)
         }
@@ -26,7 +26,7 @@ final class Array2DTests: XCTestCase {
     
     func testSubscriptGet() {
         do {
-            let a: Array2D<Int> = .init(width: 4, height: 3, elements: [
+            let a: Array2D<Int> = .init(height: 3, width: 4, elements: [
                 1, 2, 3, 4,
                 5, 6, 7, 8,
                 9, 10, 11, 12,
@@ -48,7 +48,7 @@ final class Array2DTests: XCTestCase {
             XCTAssertEqual(a[2, 3], 12)
         }
         do {
-            let a: Array2D<Int> = .init(width: 4, height: 3, elements: [
+            let a: Array2D<Int> = .init(height: 3, width: 4, elements: [
                 1, 2, 3, 4,
                 5, 6, 7, 8,
                 9, 10, 11, 12,
@@ -83,7 +83,7 @@ final class Array2DTests: XCTestCase {
     
     func testSubscriptSet() {
         do {
-            var a: Array2D<Int> = .init(width: 4, height: 3, elements: [
+            var a: Array2D<Int> = .init(height: 3, width: 4, elements: [
                 1, 2, 3, 4,
                 5, 6, 7, 8,
                 9, 10, 11, 12,
@@ -149,7 +149,7 @@ final class Array2DTests: XCTestCase {
             "3*0", "3*1", "3*2", "3*3",
             "4*0", "4*1", "4*2", "4*3"
         ]
-        let a: Array2D<String> = .init(width: 4, height: 5, elements: target)
+        let a: Array2D<String> = .init(height: 5, width: 4, elements: target)
         do {
             let neighbourList = a.neighboursCoord4(around: (1, 1))
             let expectedList = [(1, 2), (0, 1), (1, 0), (2, 1)]
@@ -194,7 +194,7 @@ final class Array2DTests: XCTestCase {
             "qwscvbfu",
             "nbvcytfr"
         ]
-        let a: Array2D<Character> = .init(width: strs[0].count, height: strs.count, stringArray: strs)
+        let a: Array2D<Character> = .init(height: strs.count, width: strs[0].count, stringArray: strs)
         let result = a.seek(word: "snuke")
         XCTAssertNotNil(result)
         let expected = [(5, 2), (4, 3), (3, 4), (2, 5), (1, 6)]

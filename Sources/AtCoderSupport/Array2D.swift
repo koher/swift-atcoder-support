@@ -7,15 +7,15 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     let height: Int
     private(set) var elements: [Element]
     let outside: Element?
-    init(width: Int, height: Int, elements: [Element], outside: Element? = nil) {
+    init(height: Int, width: Int, elements: [Element], outside: Element? = nil) {
         precondition(elements.count == width * height)
         self.width = width
         self.height = height
         self.elements = elements
         self.outside = outside
     }
-    init(width: Int, height: Int, element: Element, outside: Element? = nil) {
-        self.init(width: width, height: height, elements: [Element](repeating: element, count: width * height), outside: outside)
+    init(height: Int, width: Int, element: Element, outside: Element? = nil) {
+        self.init(height: height, width: width, elements: [Element](repeating: element, count: width * height), outside: outside)
     }
     var count: Int { elements.count }
     var rowRange: Range<Int> { 0 ..< height }
@@ -53,7 +53,7 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         elements.makeIterator()
     }
     func map<T>(_ transform: (Element) throws -> T) rethrows -> Array2D<T> {
-        try Array2D<T>(width: width, height: height, elements: elements.map(transform))
+        try Array2D<T>(height: height, width: width, elements: elements.map(transform))
     }
     func neighboursCoord4(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
         var res = [Coord]()
@@ -111,9 +111,9 @@ extension Array2D where Element: CustomStringConvertible {
     }
 }
 extension Array2D where Element == Character {
-    init(width: Int, height: Int, stringArray: [String], outside: Element? = nil) {
+    init(height: Int, width: Int, stringArray: [String], outside: Element? = nil) {
         let array = stringArray.map { s in Array(s) }.flatMap { $0 }
-        self.init(width: width, height: height, elements: array, outside: outside)
+        self.init(height: height, width: width, elements: array, outside: outside)
     }
     func seek(word: String) -> [Coord]? {
         let wcs = Array(word)
