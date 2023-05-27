@@ -55,7 +55,7 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     func map<T>(_ transform: (Element) throws -> T) rethrows -> Array2D<T> {
         try Array2D<T>(height: height, width: width, elements: elements.map(transform))
     }
-    func neighboursCoord4(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
+    func neighbours(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
         var res = [Coord]()
         for i in 0..<4 {
             let nr = now.row + quadDirectionUnitVec[i].0
@@ -67,7 +67,7 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         }
         return res
     }
-    func neighboursCoord8(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
+    func surroundings(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
         var res = [Coord]()
         for i in 0..<8 {
             let nr = now.row + octaDirectionUnitVec[i].0
