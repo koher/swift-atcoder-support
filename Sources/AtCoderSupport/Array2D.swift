@@ -81,6 +81,14 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         }
         return res
     }
+    func locationList(condition: (Element) -> Bool) -> [Coord] {
+        var res = [Coord]()
+        for (i, e) in elements.enumerated() {
+            guard condition(e) else { continue }
+            res.append((row: i / width, i % width))
+        }
+        return res
+    }
     var description: String {
         var result: String = ""
         for r in rowRange {

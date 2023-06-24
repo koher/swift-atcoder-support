@@ -227,6 +227,28 @@ final class Array2DTests: XCTestCase {
         }
     }
 
+    func testLocationList() {
+        let strs = [
+            "........",
+            "..*.....",
+            "........",
+            ".*......",
+            ".....*..",
+            "........"
+        ]
+        let a: Array2D<Character> = .init(height: strs.count, width: strs[0].count, stringArray: strs)
+        do {
+            let list = a.locationList(condition: { $0 == "*" })
+            XCTAssertTrue(list.contains { row, col in row == 1 && col == 2 })
+            XCTAssertTrue(list.contains { row, col in row == 3 && col == 1 })
+            XCTAssertTrue(list.contains { row, col in row == 4 && col == 5 })
+        }
+        do {
+            let list = a.locationList(condition: { $0 == "X" })
+            XCTAssertTrue(list.isEmpty)
+        }
+    }
+
     func testSeekWords() {
         let strs = [
             "asdfghjk",
