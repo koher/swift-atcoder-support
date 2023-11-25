@@ -6,6 +6,7 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     let width: Int
     let height: Int
     private(set) var elements: [Element]
+    private(set) var rotation: Int = 0
     let outside: Element?
     init(height: Int, width: Int, elements: [Element], outside: Element? = nil) {
         precondition(elements.count == width * height)
@@ -22,10 +23,28 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     var colRange: Range<Int> { 0 ..< width }
     private func boardContains(coord: Coord) -> Bool { rowRange.contains(coord.row) && colRange.contains(coord.col) }
     private func boardNotContains(coord: Coord) -> Bool { !boardContains(coord: coord) }
-    private func indexAt(r: Int, c: Int) -> Int? {
+    private func indexOriginAt(r: Int, c: Int) -> Int? {
         guard rowRange.contains(r) else { return nil }
         guard colRange.contains(c) else { return nil }
         return r * width + c
+    }
+    private func indexAt(r: Int, c: Int) -> Int? {
+        switch rotation {
+        case 0:
+            return indexOriginAt(r: r, c: c)
+        case 1:
+            guard colRange.contains(r) else { return nil }
+            guard rowRange.contains(c) else { return nil }
+            return indexOriginAt(r: height - 1 - c, c: r)
+        case 2:
+            return indexOriginAt(r: height - 1 - r, c: width - 1 - c)
+        case 3:
+            guard colRange.contains(r) else { return nil }
+            guard rowRange.contains(c) else { return nil }
+            return indexOriginAt(r: c, c: width - 1 - r)
+        default:
+            fatalError("illegal rotation value: \(rotation)")
+        }
     }
     subscript(r: Int, c: Int) -> Element {
         get {
@@ -88,6 +107,10 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
             res.append((row: i / width, i % width))
         }
         return res
+    }
+    mutating func rotate(count: Int = 1) {
+        rotation += count
+        rotation = rotation % 4
     }
     var description: String {
         var result: String = ""
