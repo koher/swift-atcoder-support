@@ -419,6 +419,51 @@ final class Array2DTests: XCTestCase {
         }
     }
 
+    func testTrim() {
+        let board = [
+            "........",
+            ".#####..",
+            "....#...",
+            "..###...",
+            "..#.....",
+            "........"
+        ]
+        let compact = [
+            "#####",
+            "...#.",
+            ".###.",
+            ".#...",
+        ]
+        var a: Array2D<Character> = .init(height: board.count, width: board[0].count, stringArray: board)
+        a.trim(removing: ".")
+        var b: Array2D<Character> = .init(height: compact.count, width: compact[0].count, stringArray: compact)
+
+        XCTAssertEqual(a.description, b.description)
+
+    }
+
+    func testTrimed() {
+        let board = [
+            "........",
+            ".#####..",
+            "....#...",
+            "..###...",
+            "..#.....",
+            "........"
+        ]
+        let compact = [
+            "#####",
+            "...#.",
+            ".###.",
+            ".#...",
+        ]
+        var a: Array2D<Character> = .init(height: board.count, width: board[0].count, stringArray: board)
+        var b: Array2D<Character> = .init(height: compact.count, width: compact[0].count, stringArray: compact)
+
+        XCTAssertEqual(a.trimmed(removing: ".").description, b.description)
+
+    }
+
     func testSeekWords() {
         let strs = [
             "asdfghjk",

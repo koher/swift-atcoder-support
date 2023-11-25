@@ -3,8 +3,8 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     let quadDirectionUnitVec = [(0, 1), (-1, 0), (0, -1), (1, 0)]
     let octaDirectionUnitVec = [(0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1)]
 
-    let originWidth: Int
-    let originHeight: Int
+    private(set) var originWidth: Int
+    private(set) var originHeight: Int
     var width: Int {
         rotation.isMultiple(of: 2) ? originWidth : originHeight
     }
@@ -130,6 +130,41 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
             result.append("\n")
         }
         return result
+    }
+}
+extension Array2D where Element: Equatable {
+    func trimmed(removing e: Element) -> Array2D<Element> {
+        let tb = trimmedBoard(removing: e)
+        return Array2D<Element>(height: tb.height, width: tb.width, elements: tb.elements)
+    }
+    mutating func trim(removing e: Element) {
+        let tb = trimmedBoard(removing: e)
+        self.elements = tb.elements
+        self.originWidth = tb.width
+        self.originHeight = tb.height
+    }
+    private func trimmedBoard(removing e: Element) -> (elements: [Element], width: Int, height: Int) {
+        var left = width - 1, right = 0, top = height - 1, bottom = 0
+        // Swift.min と Collection.min が衝突してて Linux 環境上での世話がめんどいので車輪を再発明
+        func vmin(_ a: Int, _ b: Int) -> Int { a < b ? a : b }
+        func vmax(_ a: Int, _ b: Int) -> Int { a > b ? a : b }
+        for r in 0..<height {
+            for c in 0..<width {
+                if self[r, c] != e {
+                    left = vmin(left, c)
+                    right = vmax(right, c)
+                    top = vmin(top, r)
+                    bottom = vmax(bottom, r)
+                }
+            }
+        }
+        var newElements = [Element]()
+        for r in top...bottom {
+            for c in left...right {
+                newElements.append(self[r, c])
+            }
+        }
+        return (newElements, right - left + 1, bottom - top + 1)
     }
 }
 extension Array2D where Element: CustomStringConvertible {
