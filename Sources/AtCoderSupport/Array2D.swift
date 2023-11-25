@@ -3,15 +3,21 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     let quadDirectionUnitVec = [(0, 1), (-1, 0), (0, -1), (1, 0)]
     let octaDirectionUnitVec = [(0, 1), (-1, 1), (-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1)]
 
-    let width: Int
-    let height: Int
+    let originWidth: Int
+    let originHeight: Int
+    var width: Int {
+        rotation.isMultiple(of: 2) ? originWidth : originHeight
+    }
+    var height: Int {
+        rotation.isMultiple(of: 2) ? originHeight : originWidth
+    }
     private(set) var elements: [Element]
     private(set) var rotation: Int = 0
     let outside: Element?
     init(height: Int, width: Int, elements: [Element], outside: Element? = nil) {
         precondition(elements.count == width * height)
-        self.width = width
-        self.height = height
+        self.originWidth = width
+        self.originHeight = height
         self.elements = elements
         self.outside = outside
     }
@@ -19,14 +25,14 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         self.init(height: height, width: width, elements: [Element](repeating: element, count: width * height), outside: outside)
     }
     var count: Int { elements.count }
-    var rowRange: Range<Int> { 0 ..< height }
-    var colRange: Range<Int> { 0 ..< width }
+    var rowRange: Range<Int> { 0 ..< originHeight }
+    var colRange: Range<Int> { 0 ..< originWidth }
     private func boardContains(coord: Coord) -> Bool { rowRange.contains(coord.row) && colRange.contains(coord.col) }
     private func boardNotContains(coord: Coord) -> Bool { !boardContains(coord: coord) }
     private func indexOriginAt(r: Int, c: Int) -> Int? {
         guard rowRange.contains(r) else { return nil }
         guard colRange.contains(c) else { return nil }
-        return r * width + c
+        return r * originWidth + c
     }
     private func indexAt(r: Int, c: Int) -> Int? {
         switch rotation {
@@ -35,13 +41,13 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         case 1:
             guard colRange.contains(r) else { return nil }
             guard rowRange.contains(c) else { return nil }
-            return indexOriginAt(r: height - 1 - c, c: r)
+            return indexOriginAt(r: originHeight - 1 - c, c: r)
         case 2:
-            return indexOriginAt(r: height - 1 - r, c: width - 1 - c)
+            return indexOriginAt(r: originHeight - 1 - r, c: originWidth - 1 - c)
         case 3:
             guard colRange.contains(r) else { return nil }
             guard rowRange.contains(c) else { return nil }
-            return indexOriginAt(r: c, c: width - 1 - r)
+            return indexOriginAt(r: c, c: originWidth - 1 - r)
         default:
             fatalError("illegal rotation value: \(rotation)")
         }
@@ -72,7 +78,7 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         elements.makeIterator()
     }
     func map<T>(_ transform: (Element) throws -> T) rethrows -> Array2D<T> {
-        try Array2D<T>(height: height, width: width, elements: elements.map(transform))
+        try Array2D<T>(height: originHeight, width: originWidth, elements: elements.map(transform))
     }
     func neighbours(around now: Coord, ignoreOutside: Bool = true) -> [Coord] {
         var res = [Coord]()
@@ -104,7 +110,7 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         var res = [Coord]()
         for (i, e) in elements.enumerated() {
             guard condition(e) else { continue }
-            res.append((row: i / width, i % width))
+            res.append((row: i / originWidth, i % originWidth))
         }
         return res
     }
@@ -148,8 +154,8 @@ extension Array2D where Element == Character {
     }
     func seek(word: String) -> [Coord]? {
         let wcs = Array(word)
-        for row in 0..<height {
-            for col in 0..<width {
+        for row in 0..<originHeight {
+            for col in 0..<originWidth {
                 for (ir, ic) in octaDirectionUnitVec {
                     var buf = ""
                     var loc = [Coord]()

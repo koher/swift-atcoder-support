@@ -249,6 +249,16 @@ final class Array2DTests: XCTestCase {
         }
     }
 
+    func testRotatedSize() {
+        let target = [Bool](repeating: false, count: 28)
+        var a: Array2D<Bool> = .init(height: 7, width: 4, elements: target)
+        XCTAssertEqual(a.width, 4)
+        a.rotate()
+        XCTAssertEqual(a.width, 7)
+        a.rotate()
+        XCTAssertEqual(a.width, 4)
+    }
+
     func testRotateOnce() {
         let target = [
             "0_0", "0_1", "0_2", "0_3",
