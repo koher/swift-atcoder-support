@@ -419,6 +419,53 @@ final class Array2DTests: XCTestCase {
         }
     }
 
+    func testResetAndRotate() {
+        let target = [
+            "0_0", "0_1", "0_2", "0_3",
+            "1_0", "1_1", "1_2", "1_3",
+            "2_0", "2_1", "2_2", "2_3",
+            "3_0", "3_1", "3_2", "3_3",
+            "4_0", "4_1", "4_2", "4_3",
+            "5_0", "5_1", "5_2", "5_3",
+            "6_0", "6_1", "6_2", "6_3"
+        ]
+        var a: Array2D<String> = .init(height: 7, width: 4, elements: target)
+        a.rotate(count: 2)
+        a.resetAndRotate(count: 1)
+
+        XCTAssertEqual(a[0, 0], "6_0")
+        XCTAssertEqual(a[0, 1], "5_0")
+        XCTAssertEqual(a[0, 2], "4_0")
+        XCTAssertEqual(a[0, 3], "3_0")
+        XCTAssertEqual(a[0, 4], "2_0")
+        XCTAssertEqual(a[0, 5], "1_0")
+        XCTAssertEqual(a[0, 6], "0_0")
+
+        XCTAssertEqual(a[1, 0], "6_1")
+        XCTAssertEqual(a[1, 1], "5_1")
+        XCTAssertEqual(a[1, 2], "4_1")
+        XCTAssertEqual(a[1, 3], "3_1")
+        XCTAssertEqual(a[1, 4], "2_1")
+        XCTAssertEqual(a[1, 5], "1_1")
+        XCTAssertEqual(a[1, 6], "0_1")
+
+        XCTAssertEqual(a[2, 0], "6_2")
+        XCTAssertEqual(a[2, 1], "5_2")
+        XCTAssertEqual(a[2, 2], "4_2")
+        XCTAssertEqual(a[2, 3], "3_2")
+        XCTAssertEqual(a[2, 4], "2_2")
+        XCTAssertEqual(a[2, 5], "1_2")
+        XCTAssertEqual(a[2, 6], "0_2")
+
+        XCTAssertEqual(a[3, 0], "6_3")
+        XCTAssertEqual(a[3, 1], "5_3")
+        XCTAssertEqual(a[3, 2], "4_3")
+        XCTAssertEqual(a[3, 3], "3_3")
+        XCTAssertEqual(a[3, 4], "2_3")
+        XCTAssertEqual(a[3, 5], "1_3")
+        XCTAssertEqual(a[3, 6], "0_3")
+    }
+
     func testTrim() {
         let board = [
             "........",
