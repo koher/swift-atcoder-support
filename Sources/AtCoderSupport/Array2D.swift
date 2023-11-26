@@ -118,6 +118,9 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         rotation += count
         rotation = rotation % 4
     }
+    mutating func resetAndRotate(count: Int) {
+        rotation = count % 4
+    }
     var description: String {
         var result: String = ""
         for r in rowRange {
