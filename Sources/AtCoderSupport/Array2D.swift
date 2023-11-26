@@ -25,13 +25,13 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         self.init(height: height, width: width, elements: [Element](repeating: element, count: width * height), outside: outside)
     }
     var count: Int { elements.count }
-    var rowRange: Range<Int> { 0 ..< originHeight }
-    var colRange: Range<Int> { 0 ..< originWidth }
-    private func boardContains(coord: Coord) -> Bool { rowRange.contains(coord.row) && colRange.contains(coord.col) }
+    var originRowRange: Range<Int> { 0 ..< originHeight }
+    var originColRange: Range<Int> { 0 ..< originWidth }
+    private func boardContains(coord: Coord) -> Bool { originRowRange.contains(coord.row) && originColRange.contains(coord.col) }
     private func boardNotContains(coord: Coord) -> Bool { !boardContains(coord: coord) }
     private func indexOriginAt(r: Int, c: Int) -> Int? {
-        guard rowRange.contains(r) else { return nil }
-        guard colRange.contains(c) else { return nil }
+        guard originRowRange.contains(r) else { return nil }
+        guard originColRange.contains(c) else { return nil }
         return r * originWidth + c
     }
     private func indexAt(r: Int, c: Int) -> Int? {
@@ -39,14 +39,14 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
         case 0:
             return indexOriginAt(r: r, c: c)
         case 1:
-            guard colRange.contains(r) else { return nil }
-            guard rowRange.contains(c) else { return nil }
+            guard originColRange.contains(r) else { return nil }
+            guard originRowRange.contains(c) else { return nil }
             return indexOriginAt(r: originHeight - 1 - c, c: r)
         case 2:
             return indexOriginAt(r: originHeight - 1 - r, c: originWidth - 1 - c)
         case 3:
-            guard colRange.contains(r) else { return nil }
-            guard rowRange.contains(c) else { return nil }
+            guard originColRange.contains(r) else { return nil }
+            guard originRowRange.contains(c) else { return nil }
             return indexOriginAt(r: c, c: originWidth - 1 - r)
         default:
             fatalError("illegal rotation value: \(rotation)")
@@ -123,8 +123,8 @@ struct Array2D<Element>: Sequence, CustomStringConvertible {
     }
     var description: String {
         var result: String = ""
-        for r in rowRange {
-            for c in colRange {
+        for r in originRowRange {
+            for c in originColRange {
                 if c > 0 {
                     result.append(" ")
                 }
@@ -173,8 +173,8 @@ extension Array2D where Element: Equatable {
 extension Array2D where Element: CustomStringConvertible {
     var description: String {
         var result: String = ""
-        for r in rowRange {
-            for c in colRange {
+        for r in originRowRange {
+            for c in originColRange {
                 if c > 0 {
                     result.append(" ")
                 }
